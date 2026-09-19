@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-PT">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#134bc3"><title>Gestão · SC Nun'Álvares</title><link rel="stylesheet" href="app.css"><link rel="stylesheet" href="admin-content.css"><script defer src="domain.js"></script><script defer src="data.js"></script><script defer src="admin-content.js"></script></head>
+<body>
+<header class="admin-header"><a class="brand" href="index.html"><span class="club-mark">NA<span>•</span></span><span>SC Nun'Álvares<small>ÁREA DE GESTÃO</small></span></a><a class="text-button" href="index.html">Voltar ao site ↗</a></header>
+<main class="admin-main">
+<div class="page-heading"><div><h1>A equipa, sempre atualizada.</h1><p id="mode-label">A carregar dados…</p></div><a class="button outline" href="index.html" target="_blank" rel="noopener">Pré-visualizar site ↗</a></div>
+<nav class="admin-nav" aria-label="Secções da gestão"><a href="#games">Jogos</a><a href="#squad">Plantel</a><a href="#news">Notícias</a><a href="#backups">Cópias e publicação</a></nav>
+<div id="admin-summary" class="admin-summary" aria-label="Resumo dos conteúdos"></div>
+<div id="status" role="status" hidden class="status-message"></div>
+<button class="button outline" id="undo-change" hidden>Desfazer última alteração</button>
+<div id="online-access" class="panel admin-card admin-wide" hidden><label for="admin-token">Chave de gestão online</label><input id="admin-token" type="password" autocomplete="off" placeholder="Chave de acesso"><p class="admin-lead">Usada apenas ao guardar. Não é gravada neste navegador.</p></div>
+<div class="admin-grid" id="games">
+<section class="panel admin-card"><h2>Próximo jogo</h2><form id="next-game-form">
+<label>Data<input name="date" type="date" required></label><label>Hora<input name="time" type="time" required></label>
+<label>Equipa da casa<select name="home" required></select></label><label>Equipa visitante<select name="away" required></select></label>
+<label class="wide">Local<input name="venue" maxlength="180" required></label>
+<label>Competição<select name="kind"><option value="league">Campeonato</option><option value="friendly">Amigável</option><option value="training">Treino</option></select></label>
+<label>Jornada / descrição<input name="competition" maxlength="120" required></label>
+<button class="button wide" type="submit">Guardar próximo jogo</button>
+</form></section>
+<section class="panel admin-card"><h2 id="result-title">Agendar jogo ou registar resultado</h2><form id="result-form">
+<label>Data<input name="date" type="date" required></label><label>Hora<input name="time" type="time" value="18:00" required></label>
+<label>Casa<select name="home" required></select></label><label>Visitante<select name="away" required></select></label>
+<label>Golos casa<input name="homeScore" type="number" min="0" max="999" step="1" placeholder="Por disputar"></label><label>Golos visitante<input name="awayScore" type="number" min="0" max="999" step="1" placeholder="Por disputar"></label>
+<label>Tipo de jogo<select name="kind"><option value="league">Campeonato</option><option value="friendly">Amigável</option><option value="training">Treino</option></select></label>
+<label>Jornada / descrição<input name="competition" value="Campeonato · Jornada" maxlength="120" required></label>
+<label class="wide">Local<input name="venue" value="Pavilhão Municipal de Recarei" maxlength="180" required></label>
+<p class="wide admin-lead" style="margin:0">Deixa os dois marcadores vazios para agendar um jogo.</p>
+<div class="wide"><button class="button" type="submit">Guardar jogo / resultado</button> <button class="text-button" id="cancel-edit" type="button" hidden>Cancelar edição</button></div>
+</form></section>
+</div>
+<section class="panel admin-card admin-wide"><div class="card-head"><div><h2>Jogos registados</h2><p>Editar um resultado atualiza os números da equipa e a classificação.</p></div></div><div id="records"></div></section>
+<section class="panel admin-card admin-wide" id="squad"><h2 id="player-title">Plantel</h2><form id="player-form"><label>Nome do jogador<input name="name" required maxlength="100"></label><label>Nome curto / apelido<input name="nickname" maxlength="100"></label><label>Número<input name="number" type="number" min="0" max="99" step="1" required></label><label>Posição<select name="position"><option>Guarda-redes</option><option>Fixo</option><option>Ala</option><option>Pivot</option><option>Universal</option><option>Fixo / Ala</option><option>Ala / Pivô</option><option>Pivô / Ala</option></select></label><label>Endereço da fotografia (opcional)<input name="photo" type="url" maxlength="2048" placeholder="https://…"></label><p class="wide field-help">Usa um endereço HTTPS de uma imagem publicada com autorização do jogador. Não é um carregamento de ficheiros.</p><div class="wide form-actions"><button class="button" type="submit">Guardar jogador</button><button class="text-button" id="cancel-player" type="button" hidden>Cancelar edição</button></div></form><div id="player-records"></div></section>
+<section class="panel admin-card admin-wide" id="news"><h2 id="news-title">Notícias</h2><form id="news-form"><label class="wide">Título<input name="title" maxlength="160" required></label><label>Categoria<input name="category" maxlength="60" value="O clube" required></label><label>Data<input name="date" type="date" required></label><label class="wide">Resumo<textarea name="excerpt" rows="2" maxlength="400" required></textarea></label><label class="wide">Texto completo<textarea name="body" rows="7" maxlength="15000" required></textarea></label><label class="wide">Endereço da imagem (opcional)<input name="photo" type="url" maxlength="2048" placeholder="https://…"></label><p class="wide field-help">Ao guardar, a notícia fica visível no site. Usa apenas imagens autorizadas.</p><div class="wide form-actions"><button class="button" type="submit">Guardar notícia</button><button class="text-button" id="cancel-news" type="button" hidden>Cancelar edição</button></div></form><div id="news-records"></div></section>
+<section class="panel admin-card admin-wide" id="backups"><h2>Cópias e publicação</h2><p class="admin-lead">Exporta regularmente uma cópia. A importação substitui os conteúdos depois de mostrares e confirmares o resumo.</p><div class="backup-actions"><button id="export-data" class="button outline">Exportar cópia</button><label class="button outline" for="import-data">Escolher cópia para importar</label><input id="import-data" type="file" accept=".json,application/json"></div><form id="settings-form"><label class="wide checkbox-field"><input name="demo" type="checkbox"> Identificar os conteúdos como demonstração</label><p class="wide field-help">Desativa apenas quando substituíres todos os exemplos por informação confirmada. Isto não publica o site na Internet.</p><button class="button" type="submit">Guardar identificação</button></form></section>
+<p class="demo-note">A gestão online requer a configuração da base de dados e da chave de acesso. Não há publicação automática nesta apresentação local.</p>
+</main>
+<dialog id="confirm-dialog" aria-labelledby="confirm-title"><h2 id="confirm-title" class="dialog-title">Confirmar alteração</h2><p id="confirm-description" class="dialog-body"></p><div class="form-actions"><button class="button outline" id="confirm-cancel">Cancelar</button><button class="button red" id="confirm-accept">Confirmar</button></div></dialog>
+</body></html>

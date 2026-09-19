@@ -1,0 +1,18 @@
+name = "vetwebsite"
+main = "worker.mjs"
+compatibility_date = "2026-09-07"
+account_id = "43dda993186953c3f2a1d91d63b10293"
+
+[build]
+command = "node build-public.cjs"
+
+[assets]
+directory = "public"
+binding = "ASSETS"
+run_worker_first = true
+not_found_handling = "single-page-application"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "scn-veteranos"
+database_id = "27ca2334-e1be-4a15-8b6d-eedfc71b8b63"

@@ -1,0 +1,86 @@
+/* Club artwork is decorative; text and controls remain real HTML. */
+.theme-nunalvares {
+  background: #07182e;
+  isolation: isolate;
+}
+.theme-nunalvares::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(110deg, rgba(4, 15, 33, .86), rgba(7, 28, 65, .72)),
+    url("fundo-nunalvares-v1.png") center / cover no-repeat;
+}
+.theme-nunalvares .brand-emblem {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  flex: none;
+}
+.theme-nunalvares .sidebar {
+  background: #081323;
+  border-right: 1px solid #ffffff12;
+}
+.theme-nunalvares .page-heading h1,
+.theme-nunalvares .section-title { color: #fff; }
+.theme-nunalvares .page-heading p,
+.theme-nunalvares .demo-note,
+.theme-nunalvares .site-footer,
+.theme-nunalvares .admin-lead { color: #c6d5ea; }
+.theme-nunalvares .site-footer { border-color: #ffffff25; }
+.theme-nunalvares .hero {
+  min-height: 360px;
+  background: #082655 url("fundo-nunalvares-v1.png") right center / cover no-repeat;
+  border: 1px solid #ffffff24;
+  box-shadow: 0 12px 32px #00000020;
+}
+.theme-nunalvares .hero::after { display: none; }
+.theme-nunalvares .hero > div:first-child { width: 100%; }
+.theme-nunalvares .hero > img { display: none; }
+.theme-nunalvares .hero h2 {
+  font-size: clamp(38px, 3.5vw, 64px);
+  max-width: 56%;
+  text-shadow: 0 2px 14px #0008;
+}
+.theme-nunalvares .hero p {
+  max-width: 50%;
+  color: #e6efff;
+  text-shadow: 0 1px 8px #000;
+}
+.theme-nunalvares .hero-label { color: #e6efff; }
+.theme-nunalvares .hero-bottom > span { color: #fff; }
+.theme-nunalvares .panel,
+.theme-nunalvares .stat,
+.theme-nunalvares .social-card { box-shadow: 0 6px 22px #020b1b20; }
+@media (min-width: 1650px) {
+  .theme-nunalvares .hero { min-height: 390px; }
+}
+@media (max-width: 980px) and (min-width: 721px) {
+  .theme-nunalvares .hero h2 { font-size: 50px; }
+}
+@media (max-width: 720px) {
+  .theme-nunalvares::before {
+    background-position: center, 65% center;
+  }
+  .theme-nunalvares .hero {
+    min-height: 520px;
+    padding: 25px;
+    background-image:
+      linear-gradient(180deg, #082655 0%, #082655 35%, rgba(8, 38, 85, 0) 65%),
+      url("fundo-nunalvares-v1.png");
+    background-size: 100% 100%, auto 290px;
+    background-position: center, right bottom;
+  }
+  .theme-nunalvares .hero h2 {
+    font-size: 44px;
+    max-width: 100%;
+  }
+  .theme-nunalvares .hero p { max-width: 235px; }
+  .theme-nunalvares .hero-bottom > span { display: none; }
+}
+@media (max-width: 370px) {
+  .theme-nunalvares .hero { padding: 22px; min-height: 540px; }
+  .theme-nunalvares .hero h2 { font-size: 40px; }
+}

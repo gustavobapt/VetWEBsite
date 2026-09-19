@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="400" viewBox="0 0 560 400" fill="none">
+<defs><pattern id="floor" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" stroke="#fff" stroke-opacity=".045"/></pattern></defs>
+<g transform="translate(98 50) rotate(-17 205 165)">
+<path d="M0 32L371 0L410 294L36 330Z" fill="#0739A3"/><path d="M0 23L371 -9L410 285L36 321Z" fill="#2865DF"/><path d="M0 23L371 -9L410 285L36 321Z" fill="url(#floor)"/>
+<path d="M26 41L349 13L383 269L60 299Z" stroke="white" stroke-opacity=".75" stroke-width="2"/>
+<path d="M42 169L366 139M195 27L197 45M237 282L235 264" stroke="white" stroke-opacity=".55" stroke-width="2"/>
+<ellipse cx="204" cy="154" rx="49" ry="41" transform="rotate(-5 204 154)" stroke="white" stroke-opacity=".65" stroke-width="2"/>
+<path d="M124 33L134 87Q208 152 274 74L268 20M150 291L143 238Q207 167 294 224L302 278" stroke="white" stroke-opacity=".7" stroke-width="2"/>
+<path d="M154 27L151 4L238 -4L241 20M178 288L181 311L269 303L266 280" stroke="white" stroke-width="3"/><circle cx="204" cy="154" r="4" fill="white"/>
+<path d="M130 216Q117 142 180 114" stroke="white" stroke-opacity=".5" stroke-width="2" stroke-dasharray="6 5"/><path d="M174 108L188 111L180 123" stroke="white" stroke-opacity=".5" stroke-width="2"/>
+<circle cx="128" cy="225" r="15" fill="#092962" fill-opacity=".4"/><circle cx="128" cy="220" r="13" fill="#F32644" stroke="#fff" stroke-width="3"/>
+<circle cx="286" cy="157" r="15" fill="#092962" fill-opacity=".4"/><circle cx="286" cy="152" r="13" fill="#F32644" stroke="#fff" stroke-width="3"/>
+<circle cx="210" cy="244" r="15" fill="#092962" fill-opacity=".4"/><circle cx="210" cy="239" r="13" fill="#fff" stroke="#0B337F" stroke-width="3"/>
+<circle cx="187" cy="94" r="15" fill="#092962" fill-opacity=".4"/><circle cx="187" cy="89" r="13" fill="#fff" stroke="#0B337F" stroke-width="3"/>
+<circle cx="316" cy="70" r="15" fill="#092962" fill-opacity=".4"/><circle cx="316" cy="65" r="13" fill="#fff" stroke="#0B337F" stroke-width="3"/>
+</g></svg>
