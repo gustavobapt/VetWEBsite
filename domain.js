@@ -64,6 +64,12 @@
       }
       if(p.photo && !safePhoto(p.photo))throw Error('A fotografia deve ter um endereço HTTPS válido, sem credenciais.');
     }
+    for(const member of list('staff',100)) {
+      if(!member||typeof member!=='object'||Array.isArray(member))throw Error('Membro da equipa técnica ou direção inválido.');
+      text(member.name,100,'Nome');text(member.role,80,'Cargo');
+      if(!['technical','directors'].includes(member.group))throw Error('Escolhe equipa técnica ou direção.');
+      if(member.photo && !safePhoto(member.photo))throw Error('A fotografia deve ter um endereço HTTPS válido, sem credenciais.');
+    }
     for(const n of list('news',200)) {
       if(!n||typeof n!=='object')throw Error('Notícia inválida.');
       text(n.title,160,'Título');text(n.category,60,'Categoria');text(n.excerpt,400,'Resumo');text(n.body,15000,'Texto');
