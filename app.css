@@ -16,3 +16,17 @@ dialog{border:0;border-radius:12px;padding:35px;width:min(540px,calc(100% - 32px
  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .content-photo{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;background:#edf3ff;margin-bottom:18px}.player-card .content-photo{aspect-ratio:4/5}.news-card .content-photo{aspect-ratio:16/9}
 .staff-section{margin-top:32px}.staff-section .section-title{margin-bottom:8px}.staff-section>.admin-lead{margin-bottom:18px}.staff-card{border-top:4px solid var(--blue)}.staff-card.directors{border-top-color:var(--red,#c82240)}.staff-card h3{font-size:20px;margin:18px 0 0;overflow-wrap:anywhere}.staff-card .tag{white-space:normal;line-height:1.5}.staff-pending{padding:24px;display:flex;align-items:center;gap:18px}.staff-pending h3{font-size:18px;margin:0 0 7px}.staff-pending p{font-size:12px;color:var(--muted);margin:0}
+.team-badge{position:relative;flex:none}
+.team-badge.has-crest{width:64px;height:64px;background:transparent;border:0;border-radius:0}
+.team-badge.has-crest .badge-initials{visibility:hidden}
+.team-badge img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.team-badge.badge-small{width:28px;height:28px;margin:0;font-size:12px;border-radius:4px}
+.team-badge.badge-detail{width:42px;height:42px;margin:0;font-size:18px}
+.team-label{display:inline-flex;align-items:center;gap:9px;min-width:0;vertical-align:middle}
+.team-label>span:last-child{min-width:0;overflow-wrap:anywhere}
+.fixture-title{display:flex;align-items:center;flex-wrap:wrap;gap:6px 9px}
+.fixture-row>div:nth-child(2){min-width:0}
+.fixture-separator{color:var(--muted);font-weight:400}
+.dialog-title .team-label{display:flex}
+.dialog-versus{display:block;font-size:18px;color:var(--muted);margin:8px 0 8px 51px}
+@media(max-width:720px){.fixture-title{display:grid;gap:5px}.fixture-separator{display:none}.fixture-title .team-label{gap:6px}.fixture-title .badge-small{width:25px;height:25px}.game-list .fixture-row{gap:8px}}

@@ -3,6 +3,16 @@
   const escape = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const normalize = s => String(s ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const isClub = name => normalize(name).includes('alvares');
+  const crestKey = name => normalize(name).replace(/[^a-z0-9]/g,'');
+  const teamCrests = Object.freeze(Object.fromEntries([
+    ['Alfa AC','alfa-ac'],['Associação Vale do Zêzere','vale-do-zezere'],
+    ['Baguim do Monte','baguim-do-monte'],['Casa FCP Rio Tinto','casa-fcp-rio-tinto'],
+    ['CP Vila Boa do Bispo','cp-vila-boa-do-bispo'],['FC Amial Regado','fc-amial-regado'],
+    ['Gondomar FC','gondomar-fc'],['Gramidense Infante','gramidense-infante'],
+    ['Juventude Gaia','juventude-gaia'],['Leixões','leixoes'],['Leões da Guarda','leoes-da-guarda'],
+    ["Nun'Álvares",'nunalvares'],['SC Nun´Álvares','nunalvares']
+  ].map(([name,slug])=>[crestKey(name),'crest-'+slug+'.png'])));
+  const teamCrest = name => {const key=crestKey(name);return Object.hasOwn(teamCrests,key)?teamCrests[key]:'';};
   const isTraining = g => g.kind === 'training' || (normalize(g.away).includes('treino') && !complete(g));
   function complete(g) { return Number.isInteger(g.homeScore) && Number.isInteger(g.awayScore) && g.homeScore >= 0 && g.awayScore >= 0; }
   const official = g => g.kind ? g.kind === 'league' : normalize(g.competition).startsWith('campeonato');
@@ -89,7 +99,7 @@
     const fold=line=>{let out='',bytes=0;for(const c of line){const size=new TextEncoder().encode(c).length;if(bytes+size>75){out+='\r\n ';bytes=1;}out+=c;bytes+=size;}return out;};
     return lines.map(fold).join('\r\n')+'\r\n';
   }
-  const api={escape,normalize,isClub,isTraining,complete,official,dateValid,dateParts,standings,fixtures,next,validate,safePhoto,calendarEvent};
+  const api={escape,normalize,isClub,teamCrest,isTraining,complete,official,dateValid,dateParts,standings,fixtures,next,validate,safePhoto,calendarEvent};
   root.SCN = api;
   if(typeof module!=='undefined') module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

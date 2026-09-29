@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path');
 const target=path.join(__dirname,'public');
-const files=['index.html','manage.html','app.css','club-background.css','admin-content.css','app.js','admin-content.js','domain.js','data.js','court.svg','fundo-nunalvares-v1.png','emblema-nunalvares.png'];
+const files=['index.html','manage.html','app.css','club-background.css','admin-content.css','app.js','admin-content.js','domain.js','data.js','court.svg','fundo-nunalvares-v1.png','emblema-nunalvares.png','crest-alfa-ac.png','crest-vale-do-zezere.png','crest-baguim-do-monte.png','crest-casa-fcp-rio-tinto.png','crest-cp-vila-boa-do-bispo.png','crest-fc-amial-regado.png','crest-gondomar-fc.png','crest-gramidense-infante.png','crest-juventude-gaia.png','crest-leixoes.png','crest-leoes-da-guarda.png','crest-nunalvares.png'];
 fs.mkdirSync(target,{recursive:true});
 const extras=fs.readdirSync(target).filter(name=>!files.includes(name));
 if(extras.length)throw Error('Ficheiros inesperados na pasta public. Rever antes de publicar: '+extras.join(', '));
