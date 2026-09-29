@@ -44,7 +44,7 @@
     if (data.demo!==undefined && typeof data.demo!=='boolean') throw Error('Estado de demonstração inválido.');
     for (const g of [...data.results,...(data.nextGame.home ? [data.nextGame]:[])]) {
       if (!g || typeof g!=='object') throw Error('Jogo inválido.');
-      if (!dateValid(g.date) || !/^([01]\d|2[0-3]):[0-5]\d$/.test(g.time||'')) throw Error('Verifica a data e a hora do jogo.');
+      if (!dateValid(g.date) || (g.time!=null && g.time!=='' && (typeof g.time!=='string' || !/^([01]\d|2[0-3]):[0-5]\d$/.test(g.time)))) throw Error('Verifica a data e a hora do jogo.');
       if (typeof g.home!=='string' || typeof g.away!=='string' || !g.home.trim() || !g.away.trim() || g.home===g.away) throw Error('Escolhe duas equipas diferentes.');
       if ((g.homeScore!=null || g.awayScore!=null) && !complete(g)) throw Error('Indica os dois resultados como números inteiros positivos ou zero.');
       if (g.home.length>100 || g.away.length>100 || (g.homeScore??0)>999 || (g.awayScore??0)>999) throw Error('Equipa ou resultado fora dos limites.');
@@ -73,7 +73,17 @@
     return data;
   }
   function safePhoto(value) {try{if(typeof value!=='string'||value.length>2048)return '';const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password ? u.href : '';}catch{return '';}}
-  const api={escape,normalize,isClub,isTraining,complete,official,dateValid,dateParts,standings,fixtures,next,validate,safePhoto};
+  function calendarEvent(g,description='',now=new Date()) {
+    if(!dateValid(g.date))throw Error('Data inválida para o calendário.');
+    const text=s=>String(s??'').replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/[,;]/g,c=>'\\'+c);
+    const day=g.date.replace(/-/g,''),timed=!!g.time;
+    const zone=['BEGIN:VTIMEZONE','TZID:Europe/Lisbon','BEGIN:DAYLIGHT','DTSTART:20260329T010000','TZOFFSETFROM:+0000','TZOFFSETTO:+0100','RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU','END:DAYLIGHT','BEGIN:STANDARD','DTSTART:20261025T020000','TZOFFSETFROM:+0100','TZOFFSETTO:+0000','RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU','END:STANDARD','END:VTIMEZONE'];
+    const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SCNA//Veteranos//PT',...(timed?zone:[]),'BEGIN:VEVENT','UID:'+encodeURIComponent(g.sourceId||[g.date,g.home,g.away].join('-'))+'@scna','DTSTAMP:'+now.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,''),timed?'DTSTART;TZID=Europe/Lisbon:'+day+'T'+g.time.replace(':','')+'00':'DTSTART;VALUE=DATE:'+day,...(timed?[]:['DURATION:P1D']),'SUMMARY:'+text(g.home+' — '+g.away),'LOCATION:'+text(g.venue||'Local a confirmar'),'DESCRIPTION:'+text([description,!timed?'Hora a confirmar. Evento de dia inteiro até ser publicado o horário.':'', 'Datas sujeitas a alterações; confirmar junto do clube.'].filter(Boolean).join(' ')),'END:VEVENT','END:VCALENDAR'];
+    // RFC 5545: fold long UTF-8 lines without splitting a code point.
+    const fold=line=>{let out='',bytes=0;for(const c of line){const size=new TextEncoder().encode(c).length;if(bytes+size>75){out+='\r\n ';bytes=1;}out+=c;bytes+=size;}return out;};
+    return lines.map(fold).join('\r\n')+'\r\n';
+  }
+  const api={escape,normalize,isClub,isTraining,complete,official,dateValid,dateParts,standings,fixtures,next,validate,safePhoto,calendarEvent};
   root.SCN = api;
   if(typeof module!=='undefined') module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

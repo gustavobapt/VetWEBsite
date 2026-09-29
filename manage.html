@@ -12,21 +12,21 @@
 <div id="online-access" class="panel admin-card admin-wide" hidden><label for="admin-token">Chave de gestão online</label><input id="admin-token" type="password" autocomplete="off" placeholder="Chave de acesso"><p class="admin-lead">Usada apenas ao guardar. Não é gravada neste navegador.</p></div>
 <div class="admin-grid" id="games">
 <section class="panel admin-card"><h2>Próximo jogo</h2><form id="next-game-form">
-<label>Data<input name="date" type="date" required></label><label>Hora<input name="time" type="time" required></label>
+<label>Data<input name="date" type="date" required></label><label>Hora (opcional)<input name="time" type="time"></label>
 <label>Equipa da casa<select name="home" required></select></label><label>Equipa visitante<select name="away" required></select></label>
-<label class="wide">Local<input name="venue" maxlength="180" required></label>
+<label class="wide">Local (opcional)<input name="venue" maxlength="180" placeholder="Local a confirmar"></label>
 <label>Competição<select name="kind"><option value="league">Campeonato</option><option value="friendly">Amigável</option><option value="training">Treino</option></select></label>
 <label>Jornada / descrição<input name="competition" maxlength="120" required></label>
 <button class="button wide" type="submit">Guardar próximo jogo</button>
 </form></section>
 <section class="panel admin-card"><h2 id="result-title">Agendar jogo ou registar resultado</h2><form id="result-form">
-<label>Data<input name="date" type="date" required></label><label>Hora<input name="time" type="time" value="18:00" required></label>
+<label>Data<input name="date" type="date" required></label><label>Hora (opcional)<input name="time" type="time"></label>
 <label>Casa<select name="home" required></select></label><label>Visitante<select name="away" required></select></label>
 <label>Golos casa<input name="homeScore" type="number" min="0" max="999" step="1" placeholder="Por disputar"></label><label>Golos visitante<input name="awayScore" type="number" min="0" max="999" step="1" placeholder="Por disputar"></label>
 <label>Tipo de jogo<select name="kind"><option value="league">Campeonato</option><option value="friendly">Amigável</option><option value="training">Treino</option></select></label>
 <label>Jornada / descrição<input name="competition" value="Campeonato · Jornada" maxlength="120" required></label>
-<label class="wide">Local<input name="venue" value="Pavilhão Municipal de Recarei" maxlength="180" required></label>
-<p class="wide admin-lead" style="margin:0">Deixa os dois marcadores vazios para agendar um jogo.</p>
+<label class="wide">Local (opcional)<input name="venue" maxlength="180" placeholder="Local a confirmar"></label>
+<p class="wide admin-lead" style="margin:0">Deixa os dois marcadores vazios para agendar um jogo. Hora e local vazios aparecem como «a confirmar».</p>
 <div class="wide"><button class="button" type="submit">Guardar jogo / resultado</button> <button class="text-button" id="cancel-edit" type="button" hidden>Cancelar edição</button></div>
 </form></section>
 </div>

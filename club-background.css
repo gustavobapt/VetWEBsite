@@ -1,4 +1,7 @@
 /* Club artwork is decorative; text and controls remain real HTML. */
+.calendar-note, .calendar-count { color: #33445e; font-size: 12px; line-height: 1.7; margin: 18px 0; }
+.calendar-note a { text-decoration: underline; text-underline-offset: 3px; }
+.theme-nunalvares .calendar-note, .theme-nunalvares .calendar-count { color: #dbe7f8; }
 .theme-nunalvares {
   background: #07182e;
   isolation: isolate;
