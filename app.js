@@ -18,9 +18,22 @@
   const empty=(title,text)=>`<div class="empty-state">${icon('calendar')}<h3>${title}</h3><p>${text}</p></div>`;
   const demoNote=()=>data.demo!==false?`<p class="demo-note">Versão em atualização · confirma datas, horários e restantes informações junto do clube.</p>`:'';
   const photo=(url,label)=>D.safePhoto(url)?`<img class="content-photo" src="${esc(D.safePhoto(url))}" alt="${esc(label)}" loading="lazy" referrerpolicy="no-referrer">`:'';
+  function mapsUrl(venue) {
+    if(typeof venue!=='string')return '';
+    const place=venue.trim();
+    if(!place||['local a confirmar','a confirmar','local por definir','por definir','—','-'].includes(D.normalize(place)))return '';
+    const url=new URL('https://www.google.com/maps/search/');
+    url.searchParams.set('api','1');
+    url.searchParams.set('query',place.replace(/\s*·\s*/g,', '));
+    return url.href;
+  }
+  function mapLink(g) {
+    const url=mapsUrl(g.venue);
+    return url?`<a class="venue-map-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="Abrir ${esc(g.venue)} no Google Maps (nova janela)">Abrir no Google Maps <span aria-hidden="true">↗</span></a>`:'';
+  }
   function fixture(g,full=false) {
     const dp=D.dateParts(g.date), training=D.isTraining(g), completed=D.complete(g);
-    return `<article class="fixture-row"><div class="date-tile"><b>${esc(dp.day)}</b><small>${esc(dp.month)}</small></div><div><div class="fixture-title">${training?'Treino da equipa':`${teamLabel(g.home)} <span class="fixture-separator" aria-label="contra">—</span> ${teamLabel(g.away)}`}</div><p class="fixture-meta">${esc(g.competition||'Jogo agendado')} · ${esc(g.time||'Hora a confirmar')}${full?`<br>${esc(g.venue||'Local a confirmar')}`:''}</p></div>${full?`<span class="${completed?'fixture-score':'tag'}">${completed?`${g.homeScore} – ${g.awayScore}`:(D.isClub(g.home)?'Casa':D.isClub(g.away)?'Fora':'Jogo')}</span>`:''}${matchButton(g)}</article>`;
+    return `<article class="fixture-row"><div class="date-tile"><b>${esc(dp.day)}</b><small>${esc(dp.month)}</small></div><div><div class="fixture-title">${training?'Treino da equipa':`${teamLabel(g.home)} <span class="fixture-separator" aria-label="contra">—</span> ${teamLabel(g.away)}`}</div><p class="fixture-meta">${esc(g.competition||'Jogo agendado')} · ${esc(g.time||'Hora a confirmar')}${full?`<br>${esc(g.venue||'Local a confirmar')}`:''}</p>${mapLink(g)}</div>${full?`<span class="${completed?'fixture-score':'tag'}">${completed?`${g.homeScore} – ${g.awayScore}`:(D.isClub(g.home)?'Casa':D.isClub(g.away)?'Fora':'Jogo')}</span>`:''}${matchButton(g)}</article>`;
   }
   function table(compact=false) {
     const rows=D.standings(data).map((row,i)=>({...row,rank:i+1}));
@@ -33,7 +46,7 @@
     const next=D.next(data);
     if(!next) return `<section class="panel match-panel"><div class="panel-header"><h2>Próximo jogo</h2></div>${empty('À espera do próximo desafio','Ainda não existe um próximo jogo agendado.')}<a class="match-action" href="#jogos">Consultar jogos →</a></section>`;
     const g=allGames.find(g=>g.date===next.date&&g.home===next.home&&g.away===next.away), training=D.isTraining(g);
-    return `<section class="panel match-panel" aria-label="Próximo ${training?'treino':'jogo'}"><div class="panel-header"><h2 class="match-label">PRÓXIMO ${training?'TREINO':'JOGO'}</h2><span class="tag">${esc((g.competition||'Agendado').split('·').pop().trim())}</span></div><p class="match-date">${esc(D.dateParts(g.date).label)}</p><div class="match-sides"><div>${badge(g.home)}<span class="team-name">${nameLabel(g.home)}</span><small class="team-side">${training?'EQUIPA':'CASA'}</small></div><div class="kickoff"><strong>${esc(g.time||'—')}</strong><small>${!g.time?'Hora a confirmar':training?'TREINO':'VS'}</small></div><div>${badge(g.away)}<span class="team-name">${nameLabel(g.away)}</span><small class="team-side">${training?'PRÉ-ÉPOCA':'VISITANTE'}</small></div></div><p class="venue">${icon('pin')} ${esc(g.venue||'Local a confirmar')}</p><button class="match-action" data-game="${g.key}">Ver detalhes do jogo &nbsp; →</button></section>`;
+    return `<section class="panel match-panel" aria-label="Próximo ${training?'treino':'jogo'}"><div class="panel-header"><h2 class="match-label">PRÓXIMO ${training?'TREINO':'JOGO'}</h2><span class="tag">${esc((g.competition||'Agendado').split('·').pop().trim())}</span></div><p class="match-date">${esc(D.dateParts(g.date).label)}</p><div class="match-sides"><div>${badge(g.home)}<span class="team-name">${nameLabel(g.home)}</span><small class="team-side">${training?'EQUIPA':'CASA'}</small></div><div class="kickoff"><strong>${esc(g.time||'—')}</strong><small>${!g.time?'Hora a confirmar':training?'TREINO':'VS'}</small></div><div>${badge(g.away)}<span class="team-name">${nameLabel(g.away)}</span><small class="team-side">${training?'PRÉ-ÉPOCA':'VISITANTE'}</small></div></div><p class="venue">${icon('pin')} ${esc(g.venue||'Local a confirmar')}</p>${mapLink(g)}<button class="match-action" data-game="${g.key}">Ver detalhes do jogo &nbsp; →</button></section>`;
   }
   function overview() {
     const own=D.standings(data).find(r=>D.isClub(r.team))||{played:0,won:0,for:0,points:0};
@@ -72,7 +85,7 @@
   }
   function showGame(key) {
     const g=allGames.find(g=>g.key===key);if(!g)return;
-    document.querySelector('#dialog-content').innerHTML=`<p class="dialog-eyebrow">${esc(g.competition||'Jogo agendado')}</p><h2 class="dialog-title" id="dialog-title">${teamLabel(g.home,'detail')}<span class="dialog-versus">${D.complete(g)?`${g.homeScore} – ${g.awayScore}`:'vs'}</span>${teamLabel(g.away,'detail')}</h2><div class="dialog-meta"><span>${esc(D.dateParts(g.date).label)} · ${esc(g.time||'Hora a confirmar')}</span><span>${esc(g.venue||'Local a confirmar')}</span></div><p class="dialog-body">${g.sourceId?'Calendário importado do zerozero. Confirma a data, a hora e o local junto do clube.':data.demo!==false?'Jogo apresentado nesta versão de demonstração. Confirma a data e o local junto do clube.':'Consulta os detalhes do jogo. Alterações de horário serão atualizadas pelo clube.'}</p><div style="margin-top:22px"><button class="button" data-download="${g.key}">Guardar no calendário ${icon('calendar')}</button></div>`;
+    document.querySelector('#dialog-content').innerHTML=`<p class="dialog-eyebrow">${esc(g.competition||'Jogo agendado')}</p><h2 class="dialog-title" id="dialog-title">${teamLabel(g.home,'detail')}<span class="dialog-versus">${D.complete(g)?`${g.homeScore} – ${g.awayScore}`:'vs'}</span>${teamLabel(g.away,'detail')}</h2><div class="dialog-meta"><span>${esc(D.dateParts(g.date).label)} · ${esc(g.time||'Hora a confirmar')}</span><span>${esc(g.venue||'Local a confirmar')}</span>${mapLink(g)}</div><p class="dialog-body">${g.sourceId?'Calendário importado do zerozero. Confirma a data, a hora e o local junto do clube.':data.demo!==false?'Jogo apresentado nesta versão de demonstração. Confirma a data e o local junto do clube.':'Consulta os detalhes do jogo. Alterações de horário serão atualizadas pelo clube.'}</p><div style="margin-top:22px"><button class="button" data-download="${g.key}">Guardar no calendário ${icon('calendar')}</button></div>`;
     dialog.showModal();
   }
   function downloadCalendar(key) {
