@@ -1,9 +1,9 @@
 /* Club artwork is decorative; text and controls remain real HTML. */
 .calendar-note, .calendar-count { color: #33445e; font-size: 12px; line-height: 1.7; margin: 18px 0; }
 .calendar-note a { text-decoration: underline; text-underline-offset: 3px; }
-.theme-nunalvares .calendar-note, .theme-nunalvares .calendar-count { color: #dbe7f8; }
+.theme-nunalvares .calendar-note, .theme-nunalvares .calendar-count { color: #45454d; }
 .theme-nunalvares {
-  background: #07182e;
+  background: #faf8f8;
   isolation: isolate;
 }
 .theme-nunalvares::before {
@@ -13,8 +13,8 @@
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(110deg, rgba(4, 15, 33, .86), rgba(7, 28, 65, .72)),
-    url("fundo-nunalvares-v1.png") center / cover no-repeat;
+    linear-gradient(110deg, rgba(255, 255, 255, .97), rgba(255, 248, 248, .90)),
+    url("fundo-nunalvares-v2.webp") center / cover no-repeat;
 }
 .theme-nunalvares .brand-emblem {
   width: 50px;
@@ -23,21 +23,26 @@
   flex: none;
 }
 .theme-nunalvares .sidebar {
-  background: #081323;
+  background: #171719;
   border-right: 1px solid #ffffff12;
 }
 .theme-nunalvares .page-heading h1,
-.theme-nunalvares .section-title { color: #fff; }
+.theme-nunalvares .section-title { color: #19191d; }
 .theme-nunalvares .page-heading p,
 .theme-nunalvares .demo-note,
 .theme-nunalvares .site-footer,
-.theme-nunalvares .admin-lead { color: #c6d5ea; }
-.theme-nunalvares .site-footer { border-color: #ffffff25; }
+.theme-nunalvares .admin-lead { color: #51515b; }
+.theme-nunalvares .site-footer { border-color: #dcd4d4; }
 .theme-nunalvares .hero {
   min-height: 360px;
-  background: #082655 url("fundo-nunalvares-v1.png") right center / cover no-repeat;
-  border: 1px solid #ffffff24;
-  box-shadow: 0 12px 32px #00000020;
+  color: #19191d;
+  background: #fff;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, .98) 0%, rgba(255, 255, 255, .94) 43%, rgba(255, 255, 255, 0) 68%), url("fundo-nunalvares-v2.webp");
+  background-position: center, right center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid #e9d4d4;
+  box-shadow: 0 12px 32px #32101014;
 }
 .theme-nunalvares .hero::after { display: none; }
 .theme-nunalvares .hero > div:first-child { width: 100%; }
@@ -45,14 +50,18 @@
 .theme-nunalvares .hero h2 {
   font-size: clamp(38px, 3.5vw, 64px);
   max-width: 56%;
-  text-shadow: 0 2px 14px #0008;
+  color: #19191d;
+  text-shadow: none;
 }
 .theme-nunalvares .hero p {
   max-width: 50%;
-  color: #e6efff;
-  text-shadow: 0 1px 8px #000;
+  color: #45454d;
+  text-shadow: none;
 }
-.theme-nunalvares .hero-label { color: #e6efff; }
+.theme-nunalvares .hero-label { color: #a91e2f; }
+.theme-nunalvares .hero-label::before { background: #c8223d; }
+.theme-nunalvares .hero .button.white { background: #bb1c32; color: #fff; }
+.theme-nunalvares .hero .button.white:hover { background: #991327; }
 .theme-nunalvares .hero-bottom > span { color: #fff; }
 .theme-nunalvares .panel,
 .theme-nunalvares .stat,
@@ -71,8 +80,8 @@
     min-height: 520px;
     padding: 25px;
     background-image:
-      linear-gradient(180deg, #082655 0%, #082655 35%, rgba(8, 38, 85, 0) 65%),
-      url("fundo-nunalvares-v1.png");
+      linear-gradient(180deg, #fff 0%, #fff 48%, rgba(255, 255, 255, 0) 74%),
+      url("fundo-nunalvares-v2.webp");
     background-size: 100% 100%, auto 290px;
     background-position: center, right bottom;
   }
@@ -87,3 +96,4 @@
   .theme-nunalvares .hero { padding: 22px; min-height: 540px; }
   .theme-nunalvares .hero h2 { font-size: 40px; }
 }
+
