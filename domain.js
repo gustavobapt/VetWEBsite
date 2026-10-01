@@ -103,9 +103,32 @@
         }
       }
     }
+    for(const item of list('media',500)) {
+      if(!item||typeof item!=='object'||Array.isArray(item))throw Error('Conteúdo da galeria inválido.');
+      if(!['photo','video'].includes(item.type))throw Error('Escolhe fotografia ou vídeo.');
+      text(item.title,160,'Título da galeria');text(item.category,60,'Categoria da galeria');
+      if(!dateValid(item.date))throw Error('Data da galeria inválida.');
+      if(item.type==='photo'?!safePhoto(item.url):!videoSource(item.url))throw Error('Usa uma imagem HTTPS ou um vídeo MP4, WebM, OGG, YouTube ou Vimeo.');
+      if(item.thumbnail&&!safePhoto(item.thumbnail))throw Error('A capa deve ter um endereço HTTPS válido.');
+      for(const [key,max] of [['description',3000],['alt',200]])if(item[key]!==undefined&&(typeof item[key]!=='string'||item[key].length>max))throw Error('Descrição da galeria inválida.');
+    }
     return data;
   }
   function safePhoto(value) {try{if(typeof value!=='string'||value.length>2048)return '';const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password ? u.href : '';}catch{return '';}}
+  function videoSource(value) {
+    const safe=safePhoto(value);if(!safe)return null;
+    const u=new URL(safe),host=u.hostname;
+    let id='';
+    if(['youtube.com','www.youtube.com','m.youtube.com'].includes(host))id=u.pathname==='/watch'?u.searchParams.get('v'):u.pathname.match(/^\/(?:shorts|embed)\/([^/]+)\/?$/)?.[1];
+    else if(host==='youtu.be')id=u.pathname.slice(1);
+    if(id&&/^[\w-]{11}$/.test(id))return {kind:'youtube',src:'https://www.youtube-nocookie.com/embed/'+id+'?rel=0'};
+    if(['vimeo.com','www.vimeo.com','player.vimeo.com'].includes(host)){
+      const match=u.pathname.match(/^\/(?:video\/)?(\d{1,15})\/?$/);
+      if(match)return {kind:'vimeo',src:'https://player.vimeo.com/video/'+match[1]};
+    }
+    if(/\.(mp4|webm|ogg)$/i.test(u.pathname))return {kind:'file',src:safe};
+    return null;
+  }
   function calendarEvent(g,description='',now=new Date()) {
     if(!dateValid(g.date))throw Error('Data inválida para o calendário.');
     const text=s=>String(s??'').replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/[,;]/g,c=>'\\'+c);
@@ -116,7 +139,7 @@
     const fold=line=>{let out='',bytes=0;for(const c of line){const size=new TextEncoder().encode(c).length;if(bytes+size>75){out+='\r\n ';bytes=1;}out+=c;bytes+=size;}return out;};
     return lines.map(fold).join('\r\n')+'\r\n';
   }
-  const api={escape,normalize,isClub,teamCrest,isTraining,complete,official,dateValid,dateParts,standings,fixtures,next,validate,safePhoto,calendarEvent};
+  const api={escape,normalize,isClub,teamCrest,isTraining,complete,official,dateValid,dateParts,standings,fixtures,next,validate,safePhoto,videoSource,calendarEvent};
   root.SCN = api;
   if(typeof module!=='undefined') module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

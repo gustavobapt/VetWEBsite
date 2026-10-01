@@ -1,7 +1,7 @@
 import './domain.js';
 const D=globalThis.SCN;
 const MAX_BYTES=1000000;
-const initial={demo:false,nextGame:{},teams:["Nun'Álvares",'Alfa AC','Associação Vale do Zêzere','Baguim do Monte','Casa FCP Rio Tinto','CP Vila Boa do Bispo','FC Amial Regado','Gondomar FC','Gramidense Infante','Juventude Gaia','Leixões','Leões da Guarda'],results:[],players:[],news:[]};
+const initial={demo:false,nextGame:{},teams:["Nun'Álvares",'Alfa AC','Associação Vale do Zêzere','Baguim do Monte','Casa FCP Rio Tinto','CP Vila Boa do Bispo','FC Amial Regado','Gondomar FC','Gramidense Infante','Juventude Gaia','Leixões','Leões da Guarda'],results:[],players:[],news:[],media:[]};
 const json=(value,status=200,headers={})=>Response.json(value,{status,headers:{'Cache-Control':'no-store',...headers}});
 async function hash(value){const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));return '"'+Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('')+'"';}
 async function validToken(received,expected){if(!expected||expected.length<32||!received)return false;const a=await hash(received),b=await hash('Bearer '+expected);let diff=0;for(let i=0;i<a.length;i++)diff|=a.charCodeAt(i)^b.charCodeAt(i);return diff===0;}
@@ -12,7 +12,7 @@ async function readBody(request){
   while(true){const {done,value}=await reader.read();if(done)break;length+=value.length;if(length>MAX_BYTES){await reader.cancel();throw Object.assign(Error('Limite de 1 MB excedido.'),{status:413});}parts.push(value);}
   const bytes=new Uint8Array(length);let offset=0;for(const part of parts){bytes.set(part,offset);offset+=part.length;}return D.validate(JSON.parse(new TextDecoder().decode(bytes)));
 }
-function secure(response){const out=new Response(response.body,response);out.headers.set('X-Content-Type-Options','nosniff');out.headers.set('Referrer-Policy','strict-origin-when-cross-origin');out.headers.set('X-Frame-Options','DENY');out.headers.set('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");return out;}
+function secure(response){const out=new Response(response.body,response);out.headers.set('X-Content-Type-Options','nosniff');out.headers.set('Referrer-Policy','strict-origin-when-cross-origin');out.headers.set('X-Frame-Options','DENY');out.headers.set('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https:; connect-src 'self'; media-src 'self' https:; frame-src https://www.youtube-nocookie.com https://player.vimeo.com; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");return out;}
 export async function handle(request,env){
   const url=new URL(request.url);
   if(!url.pathname.startsWith('/api/'))return env.ASSETS.fetch(request);
