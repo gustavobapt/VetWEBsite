@@ -11,7 +11,7 @@
     ['Gondomar FC','gondomar-fc'],['Gramidense Infante','gramidense-infante'],
     ['Juventude Gaia','juventude-gaia'],['Leixões','leixoes'],['Leões da Guarda','leoes-da-guarda'],
     ["Nun'Álvares",'nunalvares'],['SC Nun´Álvares','nunalvares']
-  ].map(([name,slug])=>[crestKey(name),'crest-'+slug+'.png'])));
+  ].map(([name,slug])=>[crestKey(name),slug==='nunalvares'?'emblema-nunalvares-oficial.png':'crest-'+slug+'.png'])));
   const teamCrest = name => {const key=crestKey(name);return Object.hasOwn(teamCrests,key)?teamCrests[key]:'';};
   const isTraining = g => g.kind === 'training' || (normalize(g.away).includes('treino') && !complete(g));
   function complete(g) { return Number.isInteger(g.homeScore) && Number.isInteger(g.awayScore) && g.homeScore >= 0 && g.awayScore >= 0; }

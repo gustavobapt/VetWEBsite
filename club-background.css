@@ -14,11 +14,11 @@
   pointer-events: none;
   background:
     linear-gradient(110deg, rgba(255, 255, 255, .97), rgba(255, 248, 248, .90)),
-    url("fundo-nunalvares-v2.webp") center / cover no-repeat;
+    url("fundo-nunalvares-v3.webp") center / cover no-repeat;
 }
 .theme-nunalvares .brand-emblem {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 54px;
   object-fit: contain;
   flex: none;
 }
@@ -37,7 +37,7 @@
   min-height: 360px;
   color: #19191d;
   background: #fff;
-  background-image: linear-gradient(90deg, rgba(255, 255, 255, .98) 0%, rgba(255, 255, 255, .94) 43%, rgba(255, 255, 255, 0) 68%), url("fundo-nunalvares-v2.webp");
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, .98) 0%, rgba(255, 255, 255, .94) 43%, rgba(255, 255, 255, 0) 68%), url("fundo-nunalvares-v3.webp");
   background-position: center, right center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -46,7 +46,12 @@
 }
 .theme-nunalvares .hero::after { display: none; }
 .theme-nunalvares .hero > div:first-child { width: 100%; }
-.theme-nunalvares .hero > img { display: none; }
+.theme-nunalvares .hero > .hero-emblem {
+  display: block; width: 30%; max-width: 190px; height: auto;
+  right: 22px; top: 50%; bottom: auto; transform: translateY(-50%);
+  object-fit: contain; opacity: 1; z-index: 0;
+}
+.theme-nunalvares .hero > div { position: relative; z-index: 1; }
 .theme-nunalvares .hero h2 {
   font-size: clamp(38px, 3.5vw, 64px);
   max-width: 56%;
@@ -81,9 +86,13 @@
     padding: 25px;
     background-image:
       linear-gradient(180deg, #fff 0%, #fff 48%, rgba(255, 255, 255, 0) 74%),
-      url("fundo-nunalvares-v2.webp");
+      url("fundo-nunalvares-v3.webp");
     background-size: 100% 100%, auto 290px;
     background-position: center, right bottom;
+  }
+  .theme-nunalvares .hero > .hero-emblem {
+    width: 130px; height: auto; max-height: 200px;
+    right: 28px; top: auto; bottom: 28px; transform: none;
   }
   .theme-nunalvares .hero h2 {
     font-size: 44px;
@@ -96,4 +105,3 @@
   .theme-nunalvares .hero { padding: 22px; min-height: 540px; }
   .theme-nunalvares .hero h2 { font-size: 40px; }
 }
-
