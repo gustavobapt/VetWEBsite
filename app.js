@@ -94,12 +94,15 @@
   function closeMenu(restore=false) {document.querySelector('#sidebar').classList.remove('is-open');document.querySelector('#menu-toggle').setAttribute('aria-expanded','false');document.querySelector('#menu-backdrop').hidden=true;document.body.style.overflow='';document.querySelector('#sidebar').inert=window.matchMedia('(max-width:720px)').matches;if(restore)document.querySelector('#menu-toggle').focus();}
   function render(focus=false) {
     const raw=location.hash.slice(1),route=aliases[raw]||raw||'inicio';
-    currentRoute=titles[route]?route:'inicio';allGames=D.fixtures(data);
+    currentRoute=titles[route]?route:'inicio';allGames=data?D.fixtures(data):[];
     document.querySelector('#breadcrumb').textContent=titles[currentRoute];
     document.querySelectorAll('[data-route]').forEach(a=>{if(a.dataset.route===currentRoute)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
-    main.innerHTML=({inicio:overview,jogos:gamesPage,classificacao:rankingPage,equipa:squadPage,noticias:newsPage,clube:clubPage}[currentRoute])();
+    if(!data) {
+      const loading=window.scnLoadState==='loading';
+      main.innerHTML=`<section class="panel"><div class="empty-state" role="${loading?'status':'alert'}"><h2>${loading?'A carregar os conteúdos…':'Não foi possível carregar os conteúdos.'}</h2><p>${loading?'A ligar à base de dados do clube.':'Verifica a tua ligação e tenta novamente.'}</p>${loading?'':'<button class="button" id="retry-data">Tentar novamente</button>'}</div></section>`;
+    } else main.innerHTML=({inicio:overview,jogos:gamesPage,classificacao:rankingPage,equipa:squadPage,noticias:newsPage,clube:clubPage}[currentRoute])();
     document.title=`${titles[currentRoute]} · SC Nun'Álvares`;
-    document.querySelector('.preview-pill').textContent=data.demo!==false?'VERSÃO DE APRESENTAÇÃO':'CONTEÚDOS DO CLUBE';
+    document.querySelector('.preview-pill').textContent=data&&data.demo!==false?'VERSÃO DE APRESENTAÇÃO':'CONTEÚDOS DO CLUBE';
     closeMenu();if(focus){window.scrollTo(0,0);main.focus({preventScroll:true});}
   }
   function showGame(key) {
@@ -120,8 +123,10 @@
     document.querySelector('#dialog-content').innerHTML=`<div class="profile-details"><p class="dialog-eyebrow">${kind==='players'?'Jogador · '+esc(p.position):esc(p.role)}</p><h2 id="dialog-title" class="dialog-title">${esc(p.fullName||p.name)}</h2>${p.nickname&&p.nickname!==(p.fullName||p.name)?`<p class="profile-nickname">${esc(p.nickname)}</p>`:''}${photo(p.photo,p.name)}${p.bio?`<section class="profile-biography"><h3>Biografia</h3><p class="dialog-body">${esc(p.bio)}</p></section>`:''}${facts.length?`<dl class="profile-facts">${facts.map(f=>`<div><dt>${esc(f.label)}</dt><dd>${esc(f.value)}</dd></div>`).join('')}</dl>`:''}${p.stats?`<section class="profile-stats" aria-label="Estatísticas da época">${[['goals','Golos marcados'],['conceded','Golos sofridos'],['yellowCards','Cartões amarelos'],['redCards','Cartões vermelhos']].map(([key,label])=>`<div><b>${esc(p.stats[key])}</b><span>${label}</span></div>`).join('')}</section>`:''}${career.length?`<section class="profile-career"><h3>Percurso federado</h3><div class="profile-career-scroll"><table class="profile-career-table"><caption class="sr-only">Percurso federado de ${esc(p.fullName||p.name)}</caption><thead><tr><th scope="col">Época</th><th scope="col">Clube</th><th scope="col">Modalidade</th><th scope="col">Escalão</th></tr></thead><tbody>${career.map(c=>`<tr><td data-label="Época">${esc(c.season)}</td><td data-label="Clube">${esc(c.club)}</td><td data-label="Modalidade">${esc(c.sport)}</td><td data-label="Escalão">${esc(c.level)}</td></tr>`).join('')}</tbody></table></div></section>`:''}${kind==='staff'&&p.group==='directors'?'':`<p class="profile-source">${kind==='players'?'Informação transcrita do site da fpf.':'Informação transcrita do <a href="https://sc-nunalvares-veteranos.gustavo-fcb.workers.dev/#equipa" target="_blank" rel="noopener noreferrer">site anterior do clube</a>.'}</p>`}</div>`;
     dialog.showModal();
   }
-  document.addEventListener('click',e=>{
+  document.addEventListener('click',async e=>{
     const target=e.target.closest('button');if(!target)return;
+    if(target.id==='retry-data'){const pending=window.loadScnRemoteData();render();data=await pending;render(true);return;}
+    if(!data)return;
     if(target.dataset.game!==undefined)showGame(target.dataset.game);
     if(target.dataset.download!==undefined)downloadCalendar(target.dataset.download);
     if(target.id==='club-games'){ownOnly=!ownOnly;target.setAttribute('aria-pressed',String(ownOnly));document.querySelector('#game-list').innerHTML=gamesList();}

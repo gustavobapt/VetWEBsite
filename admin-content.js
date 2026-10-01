@@ -55,5 +55,21 @@
   $('#import-data').onchange=async event=>{const file=event.target.files[0];event.target.value='';if(!file||!data||busy)return;try{if(file.size>1000000)throw Error('A cópia deve ter no máximo 1 MB.');const candidate=D.validate(JSON.parse(await file.text())),summary=candidate.results.length+' jogos, '+(candidate.players||[]).length+' jogadores, '+(candidate.staff||[]).length+' técnicos/diretores e '+(candidate.news||[]).length+' notícias. Vai substituir os conteúdos atuais. Exporta primeiro uma cópia se precisares de os conservar.';if(!await confirmChange('Importar cópia?',summary))return;if(await commit(candidate,'Cópia importada.')){Object.keys(editing).forEach(reset);teamOptions();fillNext();}}catch(err){status(err instanceof SyntaxError?'Este ficheiro não contém JSON válido.':err.message,true);}};
   window.addEventListener('storage',event=>{if(event.key==='scn-data'&&window.scnMode==='local')status('Os dados foram alterados noutra janela. Exporta a tua cópia e atualiza esta página antes de guardar.',true);});
   const controls=[...document.querySelectorAll('main button,main input,main select,main textarea')];controls.forEach(c=>c.disabled=true);
-  window.scnReady.then(d=>{data=d;teamOptions();fillNext();render();controls.forEach(c=>c.disabled=false);$('#mode-label').textContent=window.scnMode==='local'?'Modo local · alterações guardadas apenas neste navegador.':window.scnConnected?'Ligado à base de dados online.':'Sem ligação à base de dados online.';$('#online-access').hidden=window.scnMode==='local';if(window.scnLoadError)status('Os dados locais não puderam ser lidos. Exporta uma cópia para revisão; as gravações estão bloqueadas para preservar o original.',true);else if(window.scnMode==='remote'&&!window.scnConnected)status('A gestão online ainda não está ligada. A gravação está indisponível.',true);});
+  function initialize(d){
+    data=d;
+    $('#online-access').hidden=window.scnMode==='local';
+    if(!data){
+      controls.forEach(c=>c.disabled=true);
+      $('#mode-label').textContent='Sem ligação à base de dados online.';
+      status('Não foi possível carregar os conteúdos. Edição e exportação bloqueadas para proteger os dados existentes.',true);
+      const retry=document.createElement('button');retry.type='button';retry.id='retry-admin-data';retry.className='text-button';retry.textContent='Tentar novamente';
+      retry.onclick=async()=>{retry.disabled=true;retry.textContent='A carregar…';initialize(await window.loadScnRemoteData());};
+      $('#status').append(retry);return;
+    }
+    teamOptions();fillNext();render();controls.forEach(c=>c.disabled=false);
+    $('#mode-label').textContent=window.scnMode==='local'?'Modo local · alterações guardadas apenas neste navegador.':'Ligado à base de dados online.';
+    $('#status').replaceChildren();$('#status').hidden=true;
+    if(window.scnLoadError)status('Os dados locais não puderam ser lidos. Exporta uma cópia para revisão; as gravações estão bloqueadas para preservar o original.',true);
+  }
+  window.scnReady.then(initialize);
 })();

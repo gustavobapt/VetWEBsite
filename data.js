@@ -123,19 +123,33 @@ function loadScnData() {
   } catch { window.scnLoadError = true; }
   return structuredClone(defaultData);
 }
-window.scnData = localMode ? loadScnData() : structuredClone(defaultData);
-window.scnReady = (async () => {
-  if(localMode) return window.scnData;
-  try {
-    const response = await fetch('/api/data',{cache:'no-store'});
-    if(!response.ok) throw Error('Dados indisponíveis');
-    const incoming = SCN.validate(await response.json());
-    scnRevision = response.headers?.get('ETag') || null;
-    window.scnData = incoming;
-    window.scnConnected = true;
-  } catch { window.scnConnected = false; }
-  return window.scnData;
-})();
+window.scnData = localMode ? loadScnData() : null;
+window.scnLoadState = localMode ? 'ready' : 'loading';
+let scnLoading = null;
+window.loadScnRemoteData = function() {
+  if(localMode) return Promise.resolve(window.scnData);
+  if(scnLoading) return scnLoading;
+  window.scnLoadState = 'loading';
+  window.scnConnected = false;
+  scnLoading = (async () => {
+    try {
+      const response = await fetch('/api/data',{cache:'no-store',signal:AbortSignal.timeout(15000)});
+      if(!response.ok) throw Error('Dados indisponíveis');
+      const incoming = SCN.validate(await response.json());
+      scnRevision = response.headers?.get('ETag') || null;
+      window.scnData = incoming;
+      window.scnConnected = true;
+      window.scnLoadState = 'ready';
+    } catch {
+      window.scnData = null;
+      scnRevision = null;
+      window.scnLoadState = 'error';
+    }
+    return window.scnData;
+  })().finally(()=>{scnLoading=null;});
+  return scnLoading;
+};
+window.scnReady = localMode ? Promise.resolve(window.scnData) : window.loadScnRemoteData();
 window.saveScnData = async function(candidate) {
   if(scnSaving) throw Error('Aguarda que a gravação em curso termine.');
   scnSaving = true;
