@@ -37,8 +37,8 @@ dialog{border:0;border-radius:12px;padding:35px;width:min(540px,calc(100% - 32px
 .venue-location{line-height:1.6;overflow-wrap:anywhere}
 .venue-name{color:inherit}
 .fixture-venue{font-size:11px;color:var(--muted);margin-top:4px}
-.venue-map-link{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;margin-left:4px;vertical-align:middle;border-radius:6px;color:var(--blue);background:#edf3ff;text-decoration:none}
-.venue-map-link:hover{color:#0a399f;background:#dce7ff}
+.venue-map-link{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;margin-left:4px;vertical-align:middle;border-radius:6px;color:var(--blue);background:transparent;text-decoration:none}
+.venue-map-link:hover{color:#0a399f;background:transparent}
 .venue-map-link:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .venue-map-link .icon,.venue .venue-map-link .icon{width:18px;height:18px}
 .match-panel>.venue{font-size:11px;text-align:center}
