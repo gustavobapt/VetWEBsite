@@ -93,6 +93,14 @@
       text(n.title,160,'Título');text(n.category,60,'Categoria');text(n.excerpt,400,'Resumo');text(n.body,15000,'Texto');
       if(!dateValid(n.date))throw Error('Data da notícia inválida.');
       if(n.photo && !safePhoto(n.photo))throw Error('A imagem da notícia deve ter um endereço HTTPS válido, sem credenciais.');
+      if(n.images!==undefined){
+        if(!Array.isArray(n.images)||n.images.length>8)throw Error('A notícia pode ter até oito imagens adicionais.');
+        for(const image of n.images){
+          if(!image||typeof image!=='object'||!safePhoto(image.url))throw Error('A imagem adicional deve ter um endereço HTTPS válido, sem credenciais.');
+          if(image.alt!==undefined)text(image.alt,200,'Descrição da imagem',true);
+          if(image.caption!==undefined)text(image.caption,160,'Legenda da imagem',true);
+        }
+      }
     }
     return data;
   }
