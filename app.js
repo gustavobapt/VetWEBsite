@@ -103,7 +103,7 @@
     if(target.dataset.download!==undefined)downloadCalendar(target.dataset.download);
     if(target.id==='club-games'){ownOnly=!ownOnly;target.setAttribute('aria-pressed',String(ownOnly));document.querySelector('#game-list').innerHTML=gamesList();}
     if(target.dataset.filter){filter=target.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===target)));document.querySelector('#game-list').innerHTML=gamesList();}
-    if(target.dataset.news!==undefined){const n=(data.news||[])[Number(target.dataset.news)];if(!n)return;document.querySelector('#dialog-content').innerHTML=`<p class="dialog-eyebrow">${esc(n.category)}</p><h2 id="dialog-title" class="dialog-title">${esc(n.title)}</h2>${photo(n.photo,n.title)}<p class="dialog-body">${esc(n.body)}</p>`;dialog.showModal();}
+    if(target.dataset.news!==undefined){const n=(data.news||[])[Number(target.dataset.news)];if(!n)return;const image=D.safePhoto(n.photo);document.querySelector('#dialog-content').innerHTML=`<p class="dialog-eyebrow">${esc(n.category)}</p><h2 id="dialog-title" class="dialog-title">${esc(n.title)}</h2>${image?`<a class="news-image-link" href="${esc(image)}" target="_blank" rel="noopener noreferrer" aria-label="Abrir imagem completa da notícia (nova janela)">${photo(image,n.title)}</a><a class="text-button" href="${esc(image)}" target="_blank" rel="noopener noreferrer">Abrir cartaz completo ${icon('arrow')}</a>`:''}<p class="dialog-body">${esc(n.body)}</p>`;dialog.showModal();}
   });
   document.addEventListener('change',e=>{if(e.target.id==='round-select'){round=e.target.value;document.querySelector('#game-list').innerHTML=gamesList();}});
   document.querySelector('#menu-toggle').addEventListener('click',()=>{const open=document.querySelector('#menu-toggle').getAttribute('aria-expanded')==='true';if(open)return closeMenu(true);document.querySelector('#sidebar').inert=false;document.querySelector('#sidebar').classList.add('is-open');document.querySelector('#menu-toggle').setAttribute('aria-expanded','true');document.querySelector('#menu-backdrop').hidden=false;document.body.style.overflow='hidden';document.querySelector('.main-nav a').focus();});
@@ -126,3 +126,4 @@
   window.addEventListener('scn-data-change',()=>{data=window.scnData;render();});
   window.scnReady.then(d=>{data=d;render();});
 })();
+
