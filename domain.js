@@ -10,6 +10,7 @@
     ['CP Vila Boa do Bispo','cp-vila-boa-do-bispo'],['FC Amial Regado','fc-amial-regado'],
     ['Gondomar FC','gondomar-fc'],['Gramidense Infante','gramidense-infante'],
     ['Juventude Gaia','juventude-gaia'],['Leixões','leixoes'],['Leões da Guarda','leoes-da-guarda'],
+    ['Os Maiatos','os-maiatos'],['AC. Pedras Rubras','ac-pedras-rubras'],
     ["Nun'Álvares",'nunalvares'],['SC Nun´Álvares','nunalvares']
   ].map(([name,slug])=>[crestKey(name),slug==='nunalvares'?'emblema-nunalvares-oficial.png':'crest-'+slug+'.png'])));
   const teamCrest = name => {const key=crestKey(name);return Object.hasOwn(teamCrests,key)?teamCrests[key]:'';};
