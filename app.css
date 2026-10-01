@@ -38,6 +38,9 @@ dialog{border:0;border-radius:12px;padding:35px;width:min(540px,calc(100% - 32px
 .season-association{display:flex;align-items:center;gap:10px;margin-top:10px;min-width:0}
 .season-association .association-emblem{display:block;width:40px;height:auto;object-fit:contain;flex:none}
 .season-association .season-status{min-width:0;line-height:1.5}
+.season-association a.season-status{text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:44px}
+.season-association a.season-status:hover{color:#fff}
+.season-association a.season-status:focus-visible{outline:2px solid #78a5ff;outline-offset:4px;border-radius:2px}
 .venue-name{color:inherit}
 .fixture-venue{font-size:11px;color:var(--muted);margin-top:4px}
 .venue-map-link{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;margin-left:4px;vertical-align:middle;border-radius:6px;color:var(--blue);background:transparent;text-decoration:none}
