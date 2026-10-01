@@ -35,6 +35,9 @@ dialog{border:0;border-radius:12px;padding:35px;width:min(540px,calc(100% - 32px
 .partner>span{line-height:1.4}
 @media(max-width:720px){.partner{padding:18px 12px;min-height:152px;gap:12px}.partner-logo{height:90px}}
 .venue-location{line-height:1.6;overflow-wrap:anywhere}
+.season-association{display:flex;align-items:center;gap:10px;margin-top:10px;min-width:0}
+.season-association .association-emblem{display:block;width:40px;height:auto;object-fit:contain;flex:none}
+.season-association .season-status{min-width:0;line-height:1.5}
 .venue-name{color:inherit}
 .fixture-venue{font-size:11px;color:var(--muted);margin-top:4px}
 .venue-map-link{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;margin-left:4px;vertical-align:middle;border-radius:6px;color:var(--blue);background:transparent;text-decoration:none}
