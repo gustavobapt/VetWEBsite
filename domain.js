@@ -64,9 +64,16 @@
     const text=(value,max,label)=>{if(typeof value!=='string'||!value.trim()||value.length>max)throw Error(label+' inválido ou demasiado longo.');};
     const list=(key,max)=>{if(data[key]!==undefined&&(!Array.isArray(data[key])||data[key].length>max))throw Error('Lista de '+key+' inválida.');return data[key]||[];};
     const numbers=new Set();
+    const profile=p=>{
+      for(const [key,max] of [['fullName',100],['nickname',100],['bio',15000]])if(p[key]!==undefined&&(typeof p[key]!=='string'||p[key].length>max))throw Error('Campo da ficha inválido: '+key);
+      if(p.facts!==undefined){if(!Array.isArray(p.facts)||p.facts.length>20)throw Error('Dados da ficha inválidos.');for(const f of p.facts){if(!f||typeof f!=='object')throw Error('Dado da ficha inválido.');text(f.label,80,'Campo');text(f.value,180,'Valor');}}
+      if(p.career!==undefined){if(!Array.isArray(p.career)||p.career.length>200)throw Error('Percurso federado inválido.');for(const c of p.career){if(!c||typeof c!=='object'||Array.isArray(c))throw Error('Época do percurso inválida.');for(const [key,max] of [['season',30],['club',180],['sport',60],['level',80]])text(c[key],max,'Percurso: '+key);}}
+      if(p.stats!==undefined){if(!p.stats||typeof p.stats!=='object'||Array.isArray(p.stats))throw Error('Estatísticas inválidas.');for(const key of ['goals','conceded','yellowCards','redCards'])if(!Number.isInteger(p.stats[key])||p.stats[key]<0||p.stats[key]>9999)throw Error('Estatística inválida: '+key);}
+    };
     for(const p of list('players',200)) {
       if(!p||typeof p!=='object')throw Error('Jogador inválido.');
       text(p.name,100,'Nome');text(p.position,60,'Posição');
+      profile(p);
       if(p.nickname!==undefined && (typeof p.nickname!=='string'||p.nickname.length>100))throw Error('Nome curto do jogador inválido.');
       if(p.number!==undefined && p.number!=='') {
         if(!/^\d{1,2}$/.test(String(p.number))||numbers.has(Number(p.number)))throw Error('Número de jogador inválido ou repetido.');
@@ -77,6 +84,7 @@
     for(const member of list('staff',100)) {
       if(!member||typeof member!=='object'||Array.isArray(member))throw Error('Membro da equipa técnica ou direção inválido.');
       text(member.name,100,'Nome');text(member.role,80,'Cargo');
+      profile(member);
       if(!['technical','directors'].includes(member.group))throw Error('Escolhe equipa técnica ou direção.');
       if(member.photo && !safePhoto(member.photo))throw Error('A fotografia deve ter um endereço HTTPS válido, sem credenciais.');
     }
