@@ -60,6 +60,17 @@
       if ((g.homeScore!=null || g.awayScore!=null) && !complete(g)) throw Error('Indica os dois resultados como números inteiros positivos ou zero.');
       if (g.home.length>100 || g.away.length>100 || (g.homeScore??0)>999 || (g.awayScore??0)>999) throw Error('Equipa ou resultado fora dos limites.');
       if (g.kind!==undefined && !['league','friendly','training'].includes(g.kind)) throw Error('Tipo de jogo inválido.');
+      if(g.scorers!==undefined){
+        if(!Array.isArray(g.scorers)||g.scorers.length>100)throw Error('Lista de marcadores inválida.');
+        const seen=new Set(),totals=new Map();
+        for(const s of g.scorers){
+          if(!s||typeof s!=='object'||Array.isArray(s)||![g.home,g.away].includes(s.team)||typeof s.name!=='string'||!s.name.trim()||s.name.length>100||!Number.isInteger(s.goals)||s.goals<1||s.goals>999)throw Error('Marcador inválido.');
+          const key=s.team+'|'+normalize(s.name.trim());
+          if(seen.has(key))throw Error('Marcador repetido.');
+          seen.add(key);totals.set(s.team,(totals.get(s.team)||0)+s.goals);
+        }
+        if(g.scorers.length&&(!complete(g)||(totals.get(g.home)||0)>g.homeScore||(totals.get(g.away)||0)>g.awayScore))throw Error('Os golos dos marcadores não podem exceder o resultado.');
+      }
       for (const [key,max] of [['venue',180],['competition',120]]) if (g[key]!==undefined && (typeof g[key]!=='string'||g[key].length>max)) throw Error('Descrição do jogo demasiado longa.');
     }
     const text=(value,max,label)=>{if(typeof value!=='string'||!value.trim()||value.length>max)throw Error(label+' inválido ou demasiado longo.');};

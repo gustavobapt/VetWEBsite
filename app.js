@@ -133,7 +133,9 @@
   }
   function showGame(key) {
     const g=allGames.find(g=>g.key===key);if(!g)return;
+    const scorers=(g.scorers||[]).length?`<section class="match-scorers" aria-label="Marcadores"><h3>Marcadores</h3>${[g.home,g.away].map(team=>{const rows=g.scorers.filter(s=>s.team===team);return rows.length?`<h4>${esc(team)}</h4><ul>${rows.map(s=>`<li><span>${esc(s.name)}</span><strong>${s.goals} ${s.goals===1?'golo':'golos'}</strong></li>`).join('')}</ul>`:'';}).join('')}</section>`:'';
     document.querySelector('#dialog-content').innerHTML=`<p class="dialog-eyebrow">${esc(g.competition||'Jogo agendado')}</p><h2 class="dialog-title" id="dialog-title">${teamLabel(g.home,'detail')}<span class="dialog-versus">${D.complete(g)?`${g.homeScore} – ${g.awayScore}`:'vs'}</span>${teamLabel(g.away,'detail')}</h2><div class="dialog-meta"><span>${esc(D.dateParts(g.date).label)} · ${esc(g.time||'Hora a confirmar')}</span>${venueLocation(g)}</div><p class="dialog-body">${g.sourceId?'Calendário importado do zerozero. Confirma a data, a hora e o local junto do clube.':data.demo!==false?'Jogo apresentado nesta versão de demonstração. Confirma a data e o local junto do clube.':'Consulta os detalhes do jogo. Alterações de horário serão atualizadas pelo clube.'}</p><div style="margin-top:22px"><button class="button" data-download="${g.key}">Guardar no calendário ${icon('calendar')}</button></div>`;
+    document.querySelector('#dialog-content .dialog-meta').insertAdjacentHTML('afterend',scorers);
     dialog.showModal();
   }
   function downloadCalendar(key) {

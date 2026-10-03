@@ -5,6 +5,7 @@ fs.mkdirSync(target,{recursive:true});
 files.push('noticia-apresentacao-03-outubro-2026.webp');
 files.push('noticia-apresentacao-03-outubro-2026-atualizado.webp');
 files.push('crest-os-maiatos.png','crest-ac-pedras-rubras.png');
+files.push('galeria-2026-10-03-os-maiatos-01.jpg','galeria-2026-10-03-os-maiatos-02.jpg');
 const extras=fs.readdirSync(target).filter(name=>!files.includes(name));
 if(extras.length)throw Error('Ficheiros inesperados na pasta public. Rever antes de publicar: '+extras.join(', '));
 for(const file of files)fs.copyFileSync(path.join(__dirname,file),path.join(target,file));
