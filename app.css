@@ -50,15 +50,15 @@ dialog{border:0;border-radius:12px;padding:35px;width:min(540px,calc(100% - 32px
 .match-panel>.venue{font-size:11px;text-align:center}
 @media(max-width:720px){.venue-map-link{width:44px;height:44px}}
 .featured-news{margin-top:24px;border-top:3px solid var(--red)}
-.featured-news-content{display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px;padding:6px 24px 24px;align-items:center}
+.featured-news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px;padding:6px 24px 24px}
+.featured-news-content{display:flex;flex-direction:column;gap:18px;min-width:0;padding:18px;border:1px solid var(--line);border-radius:8px;background:#fff}
 .featured-news-image{display:block;padding:0;background:#f7f7f7;border-radius:7px;overflow:hidden;width:100%}
-.featured-news-image .content-photo{aspect-ratio:2/3;object-fit:contain;margin:0;background:transparent}
-.featured-news-copy{min-width:0}.featured-news-copy h3{font:700 32px/1.12 var(--display);margin:13px 0;overflow-wrap:anywhere}
+.featured-news-image .content-photo{height:240px;aspect-ratio:auto;object-fit:contain;margin:0;background:transparent}
+.featured-news-copy{min-width:0;display:flex;flex-direction:column;align-items:flex-start;flex:1}.featured-news-copy h3{font:700 29px/1.12 var(--display);margin:13px 0;overflow-wrap:anywhere}
 .featured-news-copy>p{font-size:13px;color:var(--muted);line-height:1.8;margin:12px 0}
 .featured-news-copy .featured-news-date{display:flex;align-items:center;gap:8px;color:var(--black);font-weight:600}
-.featured-news-copy .button{margin-top:10px;background:#bb1c32;color:#fff}.featured-news-copy .button:hover{background:#991327}
-.featured-news-content.without-image{grid-template-columns:1fr}
-@media(max-width:720px){.featured-news-content{grid-template-columns:1fr;gap:20px;padding:4px 18px 20px}.featured-news-image{max-width:250px;justify-self:center}.featured-news-copy h3{font-size:29px}.featured-news .panel-header{gap:12px;flex-wrap:wrap}}
+.featured-news-copy .button{margin-top:auto;background:#bb1c32;color:#fff}.featured-news-copy .button:hover{background:#991327}
+@media(max-width:720px){.featured-news-grid{grid-template-columns:1fr;gap:16px;padding:4px 18px 20px}.featured-news-content{padding:16px}.featured-news-image .content-photo{height:220px}.featured-news-copy h3{font-size:27px}.featured-news .panel-header{gap:12px;flex-wrap:wrap}}
 .brand-emblem{display:block;width:40px;height:54px;object-fit:contain;flex:none;border-radius:2px}.avatar.club-emblem{width:29px;height:39px;object-fit:contain;border-radius:2px;background:transparent}
 img[src="emblema-nunalvares-oficial.png"]{mask-image:url("emblema-recorte.svg");mask-size:contain;mask-repeat:no-repeat;mask-position:center}
 .news-gallery{margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}.news-gallery h3{font:700 25px/1.2 var(--display);margin-bottom:16px}.news-gallery .text-button{min-height:44px}
