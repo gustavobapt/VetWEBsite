@@ -13,6 +13,7 @@ files.push('retrato-emanuel-barros.png');
 files.push('retrato-rui-lima.png');
 files.push('retrato-leandro-rocha.png');
 files.push('retrato-ricardo-sousa.png');
+files.push('retrato-bruno-veloso.png');
 const extras=fs.readdirSync(target).filter(name=>!files.includes(name));
 if(extras.length)throw Error('Ficheiros inesperados na pasta public. Rever antes de publicar: '+extras.join(', '));
 for(const file of files)fs.copyFileSync(path.join(__dirname,file),path.join(target,file));
