@@ -9,6 +9,7 @@ files.push('galeria-2026-10-03-os-maiatos-01.jpg','galeria-2026-10-03-os-maiatos
 files.push('retrato-jogador-campo.png','retrato-guarda-redes.png');
 files.push('retrato-treinador-paulo-coelho.png');
 files.push('retrato-diretor-beto.png','retrato-diretor-nuno.png');
+files.push('retrato-emanuel-barros.png');
 const extras=fs.readdirSync(target).filter(name=>!files.includes(name));
 if(extras.length)throw Error('Ficheiros inesperados na pasta public. Rever antes de publicar: '+extras.join(', '));
 for(const file of files)fs.copyFileSync(path.join(__dirname,file),path.join(target,file));
