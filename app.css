@@ -114,3 +114,4 @@ dialog:has(.profile-details){width:min(820px,calc(100% - 32px))}.profile-details
 .squad-layout .portrait-placeholder span{font-size:10px}
 @media(max-width:1000px){.squad-layout .players-grid{grid-template-columns:1fr}}
 @media(max-width:520px){.squad-layout .person-summary{padding:12px;gap:12px}.squad-layout .person-summary .profile-portrait{width:88px;height:88px;flex-basis:88px}.squad-layout .person-info h3{font-size:18px}.squad-layout .staff-card .profile-portrait{width:80px;height:80px;flex-basis:80px}.squad-layout .player-card .profile-button{padding:12px}.squad-nav{gap:6px}.squad-nav button{padding:10px 12px}}
+.home-social{margin-top:22px}
