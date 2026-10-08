@@ -39,8 +39,8 @@
     return `<span class="venue-location"><span class="venue-name">${esc(name)}</span>${mapLink(g)}</span>`;
   }
   function fixture(g,full=false) {
-    const dp=D.dateParts(g.date), training=D.isTraining(g), completed=D.complete(g);
-    return `<article class="fixture-row"><div class="date-tile"><b>${esc(dp.day)}</b><small>${esc(dp.month)}</small></div><div><div class="fixture-title">${training?'Treino da equipa':`${teamLabel(g.home)} <span class="fixture-separator" aria-label="contra">—</span> ${teamLabel(g.away)}`}</div><p class="fixture-meta">${esc(g.competition||'Jogo agendado')} · ${esc(g.time||'Hora a confirmar')}</p><p class="fixture-venue">${venueLocation(g)}</p></div>${full?`<span class="${completed?'fixture-score':'tag'}">${completed?`${g.homeScore} – ${g.awayScore}`:(D.isClub(g.home)?'Casa':D.isClub(g.away)?'Fora':'Jogo')}</span>`:''}${matchButton(g)}</article>`;
+    const dp=D.dateParts(g.date), training=D.isTraining(g), completed=D.complete(g), own=full&&!training&&(D.isClub(g.home)||D.isClub(g.away));
+    return `<article class="fixture-row${own?' club-fixture':''}"><div class="date-tile"><b>${esc(dp.day)}</b><small>${esc(dp.month)}</small></div><div>${own?'<p class="club-fixture-label">Jogo do Nun’Álvares</p>':''}<div class="fixture-title">${training?'Treino da equipa':`${teamLabel(g.home)} <span class="fixture-separator" aria-label="contra">—</span> ${teamLabel(g.away)}`}</div><p class="fixture-meta">${esc(g.competition||'Jogo agendado')} · ${esc(g.time||'Hora a confirmar')}</p><p class="fixture-venue">${venueLocation(g)}</p></div>${full?`<span class="${completed?'fixture-score':'tag'}">${completed?`${g.homeScore} – ${g.awayScore}`:(D.isClub(g.home)?'Casa':D.isClub(g.away)?'Fora':'Jogo')}</span>`:''}${matchButton(g)}</article>`;
   }
   function table(compact=false) {
     const rows=D.standings(data).map((row,i)=>({...row,rank:i+1}));
