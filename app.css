@@ -83,3 +83,7 @@ dialog:has(.profile-details){width:min(820px,calc(100% - 32px))}.profile-details
 .profile-portrait.has-photo .portrait-placeholder{display:none}
 .profile-portrait .content-photo{position:absolute;inset:0;width:100%;height:100%;margin:0;border-radius:0;object-fit:cover;object-position:center top;aspect-ratio:auto;background:transparent}
 .profile-details .profile-portrait{max-width:160px;margin:0 auto 20px}
+.game-list .club-fixture{border-color:var(--red);background:linear-gradient(110deg,#fff0f2,#fff 75%);box-shadow:inset 4px 0 var(--red)}
+.club-fixture-label{font-size:10px;font-weight:700;letter-spacing:.4px;color:#a71630;margin:0 0 7px}
+.club-fixture .date-tile{background:#ffe1e6;color:#a71630}
+.club-fixture .date-tile small{color:#a71630}
