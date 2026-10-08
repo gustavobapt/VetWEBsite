@@ -1,12 +1,12 @@
 const defaultData = {
   demo: true,
-  nextGame: { date: '2026-10-17', time: '18:00', home: "Nun'Álvares", away: 'Juventude Gaia', venue: 'Pavilhão Municipal de Recarei', competition: 'Campeonato · Jornada 01', kind: 'league' },
-  teams: ["Nun'Álvares", 'Alfa AC', 'Associação Vale do Zêzere', 'Baguim do Monte', 'Casa FCP Rio Tinto', 'CP Vila Boa do Bispo', 'FC Amial Regado', 'Gondomar FC', 'Gramidense Infante', 'Juventude Gaia', 'Leixões', 'Leões da Guarda'],
+  nextGame: { date: '2026-10-17', time: '18:00', home: "SC Nun'Álvares", away: 'Juventude Gaia', venue: 'Pavilhão Municipal de Recarei', competition: 'Campeonato · Jornada 01', kind: 'league' },
+  teams: ["SC Nun'Álvares", 'Alfa AC', 'Associação Vale do Zêzere', 'Baguim do Monte', 'Casa FCP Rio Tinto', 'CP Vila Boa do Bispo', 'FC Amial Regado', 'Gondomar FC', 'Gramidense Infante', 'Juventude Gaia', 'Leixões', 'Leões da Guarda'],
   results: [
-    { date: '2026-10-17', time:'18:00', competition:'Campeonato · Jornada 01', kind:'league', home:"Nun'Álvares", away:'Juventude Gaia', homeScore:null, awayScore:null, venue:'Pavilhão Municipal de Recarei' },
-    { date: '2026-10-24', time:'18:00', competition:'Campeonato · Jornada 02', kind:'league', home:'FC Amial Regado', away:"Nun'Álvares", homeScore:null, awayScore:null, venue:'Local a confirmar' },
-    { date: '2026-10-31', time:'18:00', competition:'Campeonato · Jornada 03', kind:'league', home:"Nun'Álvares", away:'Casa FCP Rio Tinto', homeScore:null, awayScore:null, venue:'Pavilhão Municipal de Recarei' },
-    { date: '2026-11-07', time:'18:00', competition:'Campeonato · Jornada 04', kind:'league', home:'Leixões', away:"Nun'Álvares", homeScore:null, awayScore:null, venue:'Local a confirmar' }
+    { date: '2026-10-17', time:'18:00', competition:'Campeonato · Jornada 01', kind:'league', home:"SC Nun'Álvares", away:'Juventude Gaia', homeScore:null, awayScore:null, venue:'Pavilhão Municipal de Recarei' },
+    { date: '2026-10-24', time:'18:00', competition:'Campeonato · Jornada 02', kind:'league', home:'FC Amial Regado', away:"SC Nun'Álvares", homeScore:null, awayScore:null, venue:'Local a confirmar' },
+    { date: '2026-10-31', time:'18:00', competition:'Campeonato · Jornada 03', kind:'league', home:"SC Nun'Álvares", away:'Casa FCP Rio Tinto', homeScore:null, awayScore:null, venue:'Pavilhão Municipal de Recarei' },
+    { date: '2026-11-07', time:'18:00', competition:'Campeonato · Jornada 04', kind:'league', home:'Leixões', away:"SC Nun'Álvares", homeScore:null, awayScore:null, venue:'Local a confirmar' }
   ],
   players: [
     {
