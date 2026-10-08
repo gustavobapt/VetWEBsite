@@ -19,6 +19,7 @@ files.push('retrato-tiago-paiva.png');
 files.push('retrato-gustavo-batista.png');
 files.push('retrato-bruno-ferreira.png');
 files.push('retrato-jorge-rodrigues.png','retrato-jose-pinto.png');
+files.push('retrato-rogerio-martins.jpg');
 const extras=fs.readdirSync(target).filter(name=>!files.includes(name));
 if(extras.length)throw Error('Ficheiros inesperados na pasta public. Rever antes de publicar: '+extras.join(', '));
 for(const file of files)fs.copyFileSync(path.join(__dirname,file),path.join(target,file));
