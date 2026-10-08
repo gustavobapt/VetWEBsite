@@ -115,3 +115,9 @@ dialog:has(.profile-details){width:min(820px,calc(100% - 32px))}.profile-details
 @media(max-width:1000px){.squad-layout .players-grid{grid-template-columns:1fr}}
 @media(max-width:520px){.squad-layout .person-summary{padding:12px;gap:12px}.squad-layout .person-summary .profile-portrait{width:88px;height:88px;flex-basis:88px}.squad-layout .person-info h3{font-size:18px}.squad-layout .staff-card .profile-portrait{width:80px;height:80px;flex-basis:80px}.squad-layout .player-card .profile-button{padding:12px}.squad-nav{gap:6px}.squad-nav button{padding:10px 12px}}
 .home-social{margin-top:22px}
+.content-grid:has(.club-history){align-items:start}
+.club-history h2{font-size:34px;margin-top:0}
+.club-history ul{list-style:disc;padding-left:20px;margin:0 0 18px;color:var(--muted);font-size:13px;line-height:1.8}
+.club-history li+li{margin-top:10px}
+.club-history strong{color:var(--black)}
+.club-history .club-contact a{color:var(--blue);text-decoration:underline;overflow-wrap:anywhere}
