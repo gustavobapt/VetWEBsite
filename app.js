@@ -133,7 +133,6 @@
       main.innerHTML=`<section class="panel"><div class="empty-state" role="${loading?'status':'alert'}"><h2>${loading?'A carregar os conteúdos…':'Não foi possível carregar os conteúdos.'}</h2><p>${loading?'A ligar à base de dados do clube.':'Verifica a tua ligação e tenta novamente.'}</p>${loading?'':'<button class="button" id="retry-data">Tentar novamente</button>'}</div></section>`;
     } else main.innerHTML=({inicio:overview,jogos:gamesPage,classificacao:rankingPage,equipa:squadPage,noticias:newsPage,galeria:galleryPage,clube:clubPage}[currentRoute])();
     document.title=`${titles[currentRoute]} · SC Nun'Álvares`;
-    document.querySelector('.preview-pill').textContent=data&&data.demo!==false?'VERSÃO DE APRESENTAÇÃO':'CONTEÚDOS DO CLUBE';
     closeMenu();if(focus){window.scrollTo(0,0);main.focus({preventScroll:true});}
   }
   function showGame(key) {
