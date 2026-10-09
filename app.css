@@ -117,8 +117,9 @@ dialog:has(.profile-details){width:min(820px,calc(100% - 32px))}.profile-details
 .site-footer{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:24px;padding:12px 0}
 .footer-social{display:flex;align-items:center;gap:4px}
 .footer-social a{display:inline-grid;place-items:center;width:44px;height:44px;color:var(--blue);border-radius:4px}
-.footer-social .icon,.footer-social .footer-social-symbol{width:16px;height:16px;flex:none}
-.footer-social-symbol{display:inline-grid;place-items:center;font-size:16px;font-weight:700}
+.footer-social [data-icon]{display:flex;align-items:center;justify-content:center;line-height:0}
+.footer-social svg{display:block;width:16px;height:16px;flex:none}
+.footer-social-facebook{fill:currentColor}
 .footer-social a:hover{color:var(--blue-dark);background:#eef3ff}
 .footer-location{white-space:nowrap}
 @media(max-width:720px){.site-footer{grid-template-columns:minmax(0,1fr) auto;gap:4px 12px}.footer-social{grid-column:1/-1;grid-row:2}.footer-location{grid-column:2;grid-row:1}}
