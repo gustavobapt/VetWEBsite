@@ -115,10 +115,15 @@ dialog:has(.profile-details){width:min(820px,calc(100% - 32px))}.profile-details
 @media(max-width:1000px){.squad-layout .players-grid{grid-template-columns:1fr}}
 @media(max-width:520px){.squad-layout .person-summary{padding:12px;gap:12px}.squad-layout .person-summary .profile-portrait{width:88px;height:88px;flex-basis:88px}.squad-layout .person-info h3{font-size:18px}.squad-layout .staff-card .profile-portrait{width:80px;height:80px;flex-basis:80px}.squad-layout .player-card .profile-button{padding:12px}.squad-nav{gap:6px}.squad-nav button{padding:10px 12px}}
 .home-social{margin-top:22px}
-.home-social .social-card{width:fit-content;max-width:100%;padding:16px 18px;justify-content:flex-start;gap:24px}
+.home-social .social-card{width:100%;max-width:520px;padding:20px 22px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px}
 .home-social .social-card>div:first-child{min-width:0;max-width:100%}
-.home-social .social-links{flex-shrink:0}
-@media(max-width:520px){.home-social .social-card{gap:12px;padding:14px 16px}}
+.home-social .social-card h2{font-size:14px;line-height:1.4;margin-bottom:5px}
+.home-social .social-card p{font-size:12px;line-height:1.6}
+.home-social .social-links{gap:8px}
+.home-social .social-links a{width:44px;height:44px;flex:none;font-size:16px}
+@media(max-width:600px){.home-social .social-card{max-width:none}}
+@media(max-width:520px){.home-social .social-card{gap:12px;padding:16px}.home-social .social-card h2{font-size:13px}.home-social .social-card p{font-size:11px}}
+@media(max-width:360px){.home-social .social-card{grid-template-columns:minmax(0,1fr);gap:12px}}
 .content-grid:has(.club-history){align-items:start}
 .club-history h2{font-size:34px;margin-top:0}
 .club-history ul{list-style:disc;padding-left:20px;margin:0 0 18px;color:var(--muted);font-size:13px;line-height:1.8}
