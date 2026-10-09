@@ -121,6 +121,8 @@ dialog:has(.profile-details){width:min(820px,calc(100% - 32px))}.profile-details
 .home-social .social-card p{font-size:12px;line-height:1.6}
 .home-social .social-links{gap:8px}
 .home-social .social-links a{width:44px;height:44px;flex:none;font-size:16px}
+.home-social .social-link-label{display:none}
+@media(min-width:981px){.theme-nunalvares .home-social .social-card{max-width:none;background:transparent;border:0;border-radius:0;box-shadow:none;display:flex;justify-content:flex-start;flex-wrap:nowrap;padding:4px 0;gap:28px}.home-social .social-card h2{font-size:13px;margin:0}.home-social .social-card p{display:none}.home-social .social-links{gap:22px}.home-social .social-links a{display:flex;align-items:center;justify-content:center;width:auto;min-height:44px;gap:8px;background:transparent;border-radius:4px;font-weight:600}.home-social .social-link-label{display:inline;font-size:12px}.home-social .social-symbol{display:inline-grid;place-items:center;width:20px;height:20px}.home-social .social-links a:hover{background:transparent;color:var(--blue-dark)}.home-social .social-links a:hover .social-link-label{text-decoration:underline;text-underline-offset:3px}}
 @media(max-width:600px){.home-social .social-card{max-width:none}}
 @media(max-width:520px){.home-social .social-card{gap:12px;padding:16px}.home-social .social-card h2{font-size:13px}.home-social .social-card p{font-size:11px}}
 @media(max-width:360px){.home-social .social-card{grid-template-columns:minmax(0,1fr);gap:12px}}
