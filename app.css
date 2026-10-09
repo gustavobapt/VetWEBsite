@@ -125,3 +125,11 @@ dialog:has(.profile-details){width:min(820px,calc(100% - 32px))}.profile-details
 .club-history li+li{margin-top:10px}
 .club-history strong{color:var(--black)}
 .club-history .club-contact a{color:var(--blue);text-decoration:underline;overflow-wrap:anywhere}
+.round-bye{display:flex;align-items:center;gap:14px;padding:14px 18px;margin-bottom:18px;border:1px solid var(--line);border-radius:9px;background:#f4f7fc;color:var(--black)}
+.round-bye>.icon{flex:none;color:var(--blue)}
+.round-bye-label{display:block;margin-bottom:6px;font-size:10px;font-weight:700;color:var(--muted)}
+.round-bye p{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:12px}
+.round-bye .team-label{font-weight:700}
+.round-bye p>span:last-child{color:var(--muted)}
+.round-bye.club-bye{border-color:#efbbc4;background:#fff5f7}
+.round-bye.club-bye>.icon,.club-bye .round-bye-label{color:var(--red)}
