@@ -15,7 +15,8 @@
   ].map(([name,slug])=>[crestKey(name),slug==='nunalvares'?'emblema-nunalvares-oficial.png':'crest-'+slug+'.png'])));
   const teamCrest = name => {const key=crestKey(name);return Object.hasOwn(teamCrests,key)?teamCrests[key]:'';};
   const isTraining = g => g.kind === 'training' || (normalize(g.away).includes('treino') && !complete(g));
-  function complete(g) { return Number.isInteger(g.homeScore) && Number.isInteger(g.awayScore) && g.homeScore >= 0 && g.awayScore >= 0; }
+  function complete(g) { return g.status !== 'live' && scored(g); }
+  function scored(g) { return Number.isInteger(g.homeScore) && Number.isInteger(g.awayScore) && g.homeScore >= 0 && g.awayScore >= 0; }
   const official = g => g.kind ? g.kind === 'league' : normalize(g.competition).startsWith('campeonato');
   const dateValid = v => /^\d{4}-\d{2}-\d{2}$/.test(v || '') && !Number.isNaN(Date.parse(`${v}T12:00:00Z`)) && new Date(`${v}T12:00:00Z`).toISOString().slice(0,10) === v;
   function dateParts(value) {
@@ -53,7 +54,7 @@
   }
   function next(data,now = new Date()) {
     const local = new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Lisbon',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(now).replace(' ','T');
-    return fixtures(data).find(g=>!complete(g) && (isClub(g.home)||isClub(g.away)) && `${g.date}T${g.time||'23:59'}`>=local) || null;
+    return fixtures(data).find(g=>g.status==='live' && (isClub(g.home)||isClub(g.away))) || fixtures(data).find(g=>!complete(g) && (isClub(g.home)||isClub(g.away)) && `${g.date}T${g.time||'23:59'}`>=local) || null;
   }
   function validate(data) {
     if (!data || !Array.isArray(data.teams) || !data.teams.length || !Array.isArray(data.results) || !data.nextGame) throw Error('O ficheiro não contém os dados da equipa.');
@@ -65,7 +66,7 @@
       if (!g || typeof g!=='object') throw Error('Jogo inválido.');
       if (!dateValid(g.date) || (g.time!=null && g.time!=='' && (typeof g.time!=='string' || !/^([01]\d|2[0-3]):[0-5]\d$/.test(g.time)))) throw Error('Verifica a data e a hora do jogo.');
       if (typeof g.home!=='string' || typeof g.away!=='string' || !g.home.trim() || !g.away.trim() || g.home===g.away) throw Error('Escolhe duas equipas diferentes.');
-      if ((g.homeScore!=null || g.awayScore!=null) && !complete(g)) throw Error('Indica os dois resultados como números inteiros positivos ou zero.');
+      if ((g.homeScore!=null || g.awayScore!=null) && !scored(g)) throw Error('Indica os dois resultados como números inteiros positivos ou zero.');
       if (g.home.length>100 || g.away.length>100 || (g.homeScore??0)>999 || (g.awayScore??0)>999) throw Error('Equipa ou resultado fora dos limites.');
       if (g.kind!==undefined && !['league','friendly','training'].includes(g.kind)) throw Error('Tipo de jogo inválido.');
       if(g.scorers!==undefined){
@@ -77,7 +78,7 @@
           if(seen.has(key))throw Error('Marcador repetido.');
           seen.add(key);totals.set(s.team,(totals.get(s.team)||0)+s.goals);
         }
-        if(g.scorers.length&&(!complete(g)||(totals.get(g.home)||0)>g.homeScore||(totals.get(g.away)||0)>g.awayScore))throw Error('Os golos dos marcadores não podem exceder o resultado.');
+        if(g.scorers.length&&(!scored(g)||(totals.get(g.home)||0)>g.homeScore||(totals.get(g.away)||0)>g.awayScore))throw Error('Os golos dos marcadores não podem exceder o resultado.');
       }
       for (const [key,max] of [['venue',180],['competition',120]]) if (g[key]!==undefined && (typeof g[key]!=='string'||g[key].length>max)) throw Error('Descrição do jogo demasiado longa.');
     }
