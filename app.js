@@ -57,7 +57,8 @@
   }
   function featuredNews() {
     const news=(data.news||[]).map((n,i)=>({n,i})).sort((a,b)=>b.n.date.localeCompare(a.n.date));
-    const marked=news.filter(({n})=>n.featured===true), entries=marked.length?marked:news.slice(0,1);
+    // Todas as notícias publicadas entram automaticamente no destaque, da mais recente à mais antiga.
+    const entries=news;
     if(!entries.length)return '';
     return `<section class="panel featured-news" aria-labelledby="featured-news-heading"><div class="panel-header"><h2 id="featured-news-heading">Em destaque</h2><a class="text-button" href="#noticias">Todas as notícias ${icon('arrow')}</a></div><div class="featured-news-grid">${entries.map(({n,i})=>{const image=D.safePhoto(n.photo);return `<article class="featured-news-content ${image?'':'without-image'}">${image?`<button class="featured-news-image" data-news="${i}" aria-label="Ler notícia: ${esc(n.title)}">${photo(image,n.title)}</button>`:''}<div class="featured-news-copy"><span class="tag red">${esc(n.category)}</span><h3>${esc(n.title)}</h3>${D.dateValid(n.eventDate)?`<p class="featured-news-date">${icon('calendar')} ${esc(D.dateParts(n.eventDate).label)}</p>`:''}<p>${esc(n.excerpt)}</p>${n.venue?`<p class="featured-news-venue">${venueLocation(n)}</p>`:''}<button class="button" data-news="${i}">Ler notícia ${icon('arrow')}</button></div></article>`;}).join('')}</div></section>`;
   }
