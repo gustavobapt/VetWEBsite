@@ -11,7 +11,7 @@
   function finishConfirm(answer){$('#confirm-dialog').close();resolveConfirmation?.(answer);resolveConfirmation=null;}
   $('#confirm-cancel').onclick=()=>finishConfirm(false);$('#confirm-accept').onclick=()=>finishConfirm(true);
   $('#confirm-dialog').addEventListener('cancel',event=>{event.preventDefault();finishConfirm(false);});
-  function fill(form,item){for(const input of form.elements)if(input.name)input.value=item[input.name]??'';}
+  function fill(form,item){for(const input of form.elements)if(input.name){if(input.type==='checkbox')input.checked=item[input.name]!==false;else input.value=item[input.name]??'';}}
   function gameFields(g){return {...g,kind:g.kind||(D.isTraining(g)?'training':D.official(g)?'league':'friendly')};}
   function teamOptions(){document.querySelectorAll('select[name=home],select[name=away]').forEach(select=>{const current=select.value;const names=[...new Set([...data.teams,...data.results.flatMap(g=>[g.home,g.away]),data.nextGame.home,data.nextGame.away].filter(Boolean))];select.innerHTML=names.map(t=>'<option value="'+e(t)+'">'+e(t)+'</option>').join('');if(names.includes(current))select.value=current;});}
   function fillNext(){fill(forms.next,gameFields(data.nextGame));}
@@ -33,7 +33,7 @@
     catch(err){status(err.name==='TimeoutError'?'A ligação demorou demasiado. Exporta a cópia e atualiza a página antes de repetir a gravação.':err.message||'Não foi possível guardar.',true);return false;}
     finally{controls.forEach((c,i)=>c.disabled=states[i]);busy=false;}
   }
-  function formData(form){const item=Object.fromEntries(new FormData(form));Object.keys(item).forEach(k=>item[k]=item[k].trim());return item;}
+  function formData(form){const item=Object.fromEntries(new FormData(form));for(const input of form.elements)if(input.name&&input.type==='checkbox')item[input.name]=input.checked;Object.keys(item).forEach(k=>{if(typeof item[k]==='string')item[k]=item[k].trim();});return item;}
   forms.next.onsubmit=async event=>{event.preventDefault();if(!data||busy)return;const g=formData(forms.next),candidate=structuredClone(data),previous=candidate.nextGame;candidate.nextGame=g;
     const oldIndex=candidate.results.findIndex(r=>identity(r)===identity(previous)&&!D.complete(r)),newIndex=candidate.results.findIndex(r=>identity(r)===identity(g));
     if(newIndex>=0){if(D.complete(candidate.results[newIndex]))return status('Este jogo já tem resultado. Usa a edição de jogos para o alterar.',true);candidate.results[newIndex]={...candidate.results[newIndex],...g};if(oldIndex>=0&&oldIndex!==newIndex)candidate.results.splice(oldIndex,1);}
